@@ -1,8 +1,14 @@
-import React from 'react';
-import { StyleSheet, Text, View } from 'react-native';
-import { createBottomTabNavigator } from 'react-navigation';
+import {createBottomTabNavigator, createStackNavigator} from 'react-navigation';
 import Home from './components/Home';
+import Order from './components/Order';
+import QRScanner from './components/QRScanner';
+
+const QRStack = createStackNavigator({
+    QRScanner: QRScanner,
+    Order: Order,
+});
 
 export default createBottomTabNavigator({
-    Home: Home
+    Home: Home,
+    QRScanner: QRStack
 })
