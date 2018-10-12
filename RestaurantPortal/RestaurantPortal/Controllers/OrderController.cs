@@ -31,5 +31,11 @@ namespace RestaurantPortal.Controllers
                 DoneOrders = _orderRepository.GetOrdersForRestaurant(restaurantId, OrderStatus.Done)
             };
         }
+
+        [HttpPatch("{orderId}/{status}")]
+        public void UpdateOrderStatus(int orderId, OrderStatus status)
+        {
+            _orderRepository.ChangeOrderStatus(orderId, status);
+        }
     }
 }
