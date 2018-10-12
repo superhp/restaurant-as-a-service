@@ -13,7 +13,7 @@ namespace RestaurantPortal.Controllers
     [ApiController]
     public class MenuController : ControllerBase
     {
-        private IMenuRepository _menuRepository;
+        private readonly IMenuRepository _menuRepository;
 
         public MenuController(IMenuRepository menuRepository)
         {
