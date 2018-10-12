@@ -7,6 +7,8 @@ Project("{9A19103F-16F7-4668-BE54-9A1E7A4F7556}") = "RestaurantPortal", "Restaur
 EndProject
 Project("{9A19103F-16F7-4668-BE54-9A1E7A4F7556}") = "RestaurantPortal.Db", "Db\RestaurantPortal.Db.csproj", "{B42220CA-271C-4BEB-8A04-2172955E5546}"
 EndProject
+Project("{FAE04EC0-301F-11D3-BF4B-00C04F79EFBC}") = "RestaurantPortal.Models", "RestaurantPortal.Models\RestaurantPortal.Models.csproj", "{3B41132C-A753-4844-94C1-FD374223BE89}"
+EndProject
 Global
 	GlobalSection(SolutionConfigurationPlatforms) = preSolution
 		Debug|Any CPU = Debug|Any CPU
@@ -21,6 +23,10 @@ Global
 		{B42220CA-271C-4BEB-8A04-2172955E5546}.Debug|Any CPU.Build.0 = Debug|Any CPU
 		{B42220CA-271C-4BEB-8A04-2172955E5546}.Release|Any CPU.ActiveCfg = Release|Any CPU
 		{B42220CA-271C-4BEB-8A04-2172955E5546}.Release|Any CPU.Build.0 = Release|Any CPU
+		{3B41132C-A753-4844-94C1-FD374223BE89}.Debug|Any CPU.ActiveCfg = Debug|Any CPU
+		{3B41132C-A753-4844-94C1-FD374223BE89}.Debug|Any CPU.Build.0 = Debug|Any CPU
+		{3B41132C-A753-4844-94C1-FD374223BE89}.Release|Any CPU.ActiveCfg = Release|Any CPU
+		{3B41132C-A753-4844-94C1-FD374223BE89}.Release|Any CPU.Build.0 = Release|Any CPU
 	EndGlobalSection
 	GlobalSection(SolutionProperties) = preSolution
 		HideSolutionNode = FALSE
