@@ -1,13 +1,24 @@
 ﻿using Microsoft.AspNetCore.Mvc;
+using RestaurantPortal.Db.Repositories;
+using RestaurantPortal.Models;
 
 namespace RestaurantPortal.Controllers
 {
+    [Route("api/[controller]")]
     public class OrderController : Controller
     {
-        [HttpPost]
-        public int CreateOrder()
+        private readonly IOrderRepository _orderRepository;
+
+        public OrderController(IOrderRepository orderRepository)
         {
-            return 42;
+            _orderRepository = orderRepository;
+        }
+
+        [HttpPost]
+        public int CreateOrder([FromBody]OrderDto order)
+        {
+            var orderId = _orderRepository.SaveOrder(order);
+            return orderId;
         }
 
         [HttpGet]

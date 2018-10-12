@@ -5,6 +5,7 @@ namespace RestaurantPortal.Models
     public class OrderDto
     {
         public int OrderId { get; set; }
+        public int RestaurantId { get; set; }
         public int CustomerId { get; set; }
         public decimal PaidPrice { get; set; }
         public string Table { get; set; }
