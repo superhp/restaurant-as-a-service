@@ -7,9 +7,9 @@ namespace RestaurantPortal.Db.Entities
     {
         public int OrderId { get; set; }
 
-        public int MenuCategoryId { get; set; }
-        [ForeignKey("MenuItemCategoryId")]
-        public MenuItemCategory MenuItemCategory { get; set; }
+        public int RestaurantId { get; set; }
+        [ForeignKey("RestaurantId")]
+        public virtual Restaurant Restaurant { get; set; }
 
         public int CustomerId { get; set; }
         public float PaidPrice { get; set; }

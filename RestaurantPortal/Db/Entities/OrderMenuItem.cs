@@ -7,8 +7,10 @@ namespace RestaurantPortal.Db.Entities
 {
     public class OrderMenuItem
     {
+        public int OrderMenuItemId { get; set; }
         public int OrderId { get; set; }
-        public Order Order { get; set; }
+        [ForeignKey("OrderId")]
+        public virtual Order Order { get; set; }
         public int MenuItemId { get; set; }
         [ForeignKey("MenuItemId")]
         public virtual MenuItem MenuItem { get; set; }
