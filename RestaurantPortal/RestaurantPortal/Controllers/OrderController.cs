@@ -21,16 +21,15 @@ namespace RestaurantPortal.Controllers
             return orderId;
         }
 
-        [HttpGet]
-        public void GetOrder(int id)
+        [HttpGet("restaurant/{restaurantId}")]
+        public OrdersForRestaurantDto GetOrdersForRestaurant(int restaurantId)
         {
-            
-        }
-
-        [HttpGet]
-        public void GetOrders(int id)
-        {
-            
+            return new OrdersForRestaurantDto
+            {
+                CreatedOrders = _orderRepository.GetOrdersForRestaurant(restaurantId, OrderStatus.Ordered),
+                InProgressOrders = _orderRepository.GetOrdersForRestaurant(restaurantId, OrderStatus.InProgress),
+                DoneOrders = _orderRepository.GetOrdersForRestaurant(restaurantId, OrderStatus.Done)
+            };
         }
     }
 }
