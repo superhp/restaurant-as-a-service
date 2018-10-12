@@ -34,7 +34,7 @@ const getItemStyle = (isDragging, draggableStyle) => ({
 const getListStyle = isDraggingOver => ({
 	background: isDraggingOver ? 'lightblue' : 'lightgrey',
 	padding: grid,
-	width: 250
+	width: 350
 });
 
 class Home extends Component {
