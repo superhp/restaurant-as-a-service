@@ -16,7 +16,7 @@ namespace RestaurantPortal.Db.Entities
         public virtual MenuItemCategory MenuItemCategory { get; set; }
 
         public string Name { get; set; }
-        public float Price { get; set; }
+        public decimal Price { get; set; }
         public string Image { get; set; }
 
         public ICollection<OrderMenuItem> Orders { get; set; }

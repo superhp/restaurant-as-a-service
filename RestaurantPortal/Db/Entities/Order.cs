@@ -12,7 +12,7 @@ namespace RestaurantPortal.Db.Entities
         public virtual Restaurant Restaurant { get; set; }
 
         public int CustomerId { get; set; }
-        public float PaidPrice { get; set; }
+        public decimal PaidPrice { get; set; }
         public string Table { get; set; }
 
         public ICollection<OrderMenuItem> PurchasedMenuItems { get; set; }
