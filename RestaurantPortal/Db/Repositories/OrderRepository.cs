@@ -1,4 +1,5 @@
-﻿using System.Collections.Generic;
+﻿using System;
+using System.Collections.Generic;
 using System.Linq;
 using Microsoft.EntityFrameworkCore;
 using RestaurantPortal.Db.Entities;
@@ -58,6 +59,17 @@ namespace RestaurantPortal.Db.Repositories
                     }).ToList()
                 };
             }).ToList() : new List<OrderDto>();
+        }
+
+        public void ChangeOrderStatus(int orderId, OrderStatus status)
+        {
+            var order = _context.Orders.Find(orderId);
+
+            if (order == null)
+                throw new ArgumentException($"No order with ID {orderId}");
+
+            order.OrderStatus = (OrderStatusEnum) Enum.Parse(typeof(OrderStatusEnum), ((int)status).ToString());
+            _context.SaveChanges();
         }
     }
 }
