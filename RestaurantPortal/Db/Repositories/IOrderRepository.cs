@@ -9,5 +9,6 @@ namespace RestaurantPortal.Db.Repositories
         List<OrderDto> GetOrdersForRestaurant(int restaurantId, OrderStatus status);
         List<OrderDto> GetOrdersForCustomer(int customerId, OrderStatus status);
         List<OrderDto> GetOrdersForCustomer(int customerId);
+        void ChangeOrderStatus(int orderId, OrderStatus status);
     }
 }

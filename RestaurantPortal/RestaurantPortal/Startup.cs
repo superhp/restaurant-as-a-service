@@ -32,6 +32,15 @@ namespace RestaurantPortal
                 options.UseSqlServer(Configuration.GetConnectionString("DefaultConnection"))
             );
 
+            services.AddCors(options => options.AddPolicy("CorsPolicy",
+                b =>
+                {
+                    b.AllowAnyOrigin()
+                     .AllowAnyMethod()
+                     .AllowAnyHeader()
+                     .AllowCredentials();
+                }));
+
             services.AddMvc().SetCompatibilityVersion(CompatibilityVersion.Version_2_1);
 
             // In production, the React files will be served from this directory
@@ -75,6 +84,7 @@ namespace RestaurantPortal
             app.UseHttpsRedirection();
             app.UseStaticFiles();
             app.UseSpaStaticFiles();
+            app.UseCors("CorsPolicy");
 
             app.UseMvc(routes =>
             {

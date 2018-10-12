@@ -27,9 +27,9 @@ namespace RestaurantPortal.Controllers
         {
             return new OrdersForRestaurantDto
             {
-                CreatedOrders = _orderRepository.GetOrdersForRestaurant(restaurantId, OrderStatus.Ordered),
-                InProgressOrders = _orderRepository.GetOrdersForRestaurant(restaurantId, OrderStatus.InProgress),
-                DoneOrders = _orderRepository.GetOrdersForRestaurant(restaurantId, OrderStatus.Done)
+                NewOrders = _orderRepository.GetOrdersForRestaurant(restaurantId, OrderStatus.Ordered),
+                ProcessingOrders = _orderRepository.GetOrdersForRestaurant(restaurantId, OrderStatus.InProgress),
+                FinishedOrders = _orderRepository.GetOrdersForRestaurant(restaurantId, OrderStatus.Done)
             };
         }
 
@@ -38,6 +38,12 @@ namespace RestaurantPortal.Controllers
         {
             return status == null ? _orderRepository.GetOrdersForCustomer(customerId)
                 : _orderRepository.GetOrdersForCustomer(customerId, (OrderStatus) status);
+        }
+
+        [HttpPatch("{orderId}/{status}")]
+        public void UpdateOrderStatus(int orderId, OrderStatus status)
+        {
+            _orderRepository.ChangeOrderStatus(orderId, status);
         }
     }
 }
