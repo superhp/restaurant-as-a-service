@@ -17,11 +17,11 @@ namespace RestaurantPortal.Db.Repositories
 
         public IEnumerable<MenuItemDto> GetMenu(int restaurantId)
         {
-            var menu = _dbContext.MenuItems.Where(m => m.RestaurantId == restaurantId).Select(m => new MenuItemDto
+            var menu = _dbContext.MenuItems.Where(m => m.RestaurantId == restaurantId).ToList().Select(m => new MenuItemDto
             {
-                MenuItemId = m.MenuItemId,
+                Id = m.MenuItemId,
                 Image = m.Image,
-                MenuItemCategoryId = m.MenuItemCategoryId,
+                CategoryId = m.MenuItemCategoryId,
                 Name = m.Name,
                 Price = m.Price
             });
