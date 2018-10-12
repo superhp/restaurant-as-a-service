@@ -18,18 +18,24 @@ const move = (source, destination, droppableSource, droppableDestination) => {
 
 const grid = 8;
 
-const getItemStyle = (isDragging, draggableStyle) => ({
-	// some basic styles to make the items look a bit nicer
-	userSelect: 'none',
-	padding: grid * 2,
-	margin: `0 0 ${grid}px 0`,
+const getItemStyle = (isDragging, draggableStyle) => {
+	let style =  {
+		// some basic styles to make the items look a bit nicer
+		userSelect: 'none',
+		padding: grid * 2,
+		margin: `0 0 ${grid}px 0`,
 
-	// change background colour if dragging
-	background: isDragging ? 'lightgreen' : 'white',
+		// change background colour if dragging
+		background: isDragging ? 'lightgreen' : 'white',
 
-	// styles we need to apply on draggables
-	...draggableStyle
-});
+		// styles we need to apply on draggables
+		...draggableStyle
+	};
+	if (isDragging) {
+		style.transform = style.transform + ' rotate(5deg)';
+	}
+	return style; 
+};
 
 const getListStyle = isDraggingOver => ({
 	background: isDraggingOver ? 'lightblue' : 'lightgrey',
@@ -52,8 +58,8 @@ class Home extends Component {
 
 	getList = id => this.state[this.id2List[id]];
 
-	onDragEnd = inp => {
-		const { source, destination } = inp;
+	onDragEnd = inpt => {
+		const { source, destination } = inpt;
 
 		// dropped outside the list
 		if (!destination) {
