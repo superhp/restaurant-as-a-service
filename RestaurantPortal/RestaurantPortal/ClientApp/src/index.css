@@ -8,3 +8,14 @@
 .Orders {
 	display: flex;
 }
+
+.OrdersColumn {
+	margin-top: 50px; 
+	margin-right: 50px;
+}
+
+.OrdersColumn h2 {
+	font-size: 16px;
+	font-weight: 700;
+	margin-bottom: 20px; 
+}

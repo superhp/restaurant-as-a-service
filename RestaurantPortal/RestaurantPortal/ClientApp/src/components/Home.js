@@ -25,7 +25,7 @@ const getItemStyle = (isDragging, draggableStyle) => ({
 	margin: `0 0 ${grid}px 0`,
 
 	// change background colour if dragging
-	background: isDragging ? 'lightgreen' : 'grey',
+	background: isDragging ? 'lightgreen' : 'white',
 
 	// styles we need to apply on draggables
 	...draggableStyle
@@ -94,14 +94,29 @@ class Home extends Component {
 			<DragDropContext onDragEnd={this.onDragEnd}>
 
 				<div className="Orders">
-					<div>
-						{droppable(this.state.newOrders, "droppable")} 
+					<div className="OrdersColumn">
+						<div>
+							<h2>New Orders</h2>
+						</div>
+						<div>
+							{droppable(this.state.newOrders, "droppable")} 
+						</div>
 					</div>
-					<div>
-						{droppable(this.state.processingOrders, "droppable2")}
+					<div className="OrdersColumn">
+						<div>
+							<h2>Processing Orders</h2>
+						</div>
+						<div>
+							{droppable(this.state.processingOrders, "droppable2")}
+						</div>
 					</div>
-					<div>
-						{droppable(this.state.finishedOrders, "droppable3")}
+					<div className="OrdersColumn">
+						<div>
+							<h2>Finished Orders</h2>
+						</div>
+						<div>
+							{droppable(this.state.finishedOrders, "droppable3")}
+						</div>
 					</div>
 				</div>
 			</DragDropContext>
