@@ -1,4 +1,5 @@
-﻿using Microsoft.AspNetCore.Mvc;
+﻿using System.Collections.Generic;
+using Microsoft.AspNetCore.Mvc;
 using RestaurantPortal.Db.Repositories;
 using RestaurantPortal.Models;
 
@@ -30,6 +31,13 @@ namespace RestaurantPortal.Controllers
                 InProgressOrders = _orderRepository.GetOrdersForRestaurant(restaurantId, OrderStatus.InProgress),
                 DoneOrders = _orderRepository.GetOrdersForRestaurant(restaurantId, OrderStatus.Done)
             };
+        }
+
+        [HttpGet("customer/{customerId}")]
+        public List<OrderDto> GetOrdersForCustomer(int customerId, [FromQuery] OrderStatus? status = null)
+        {
+            return status == null ? _orderRepository.GetOrdersForCustomer(customerId)
+                : _orderRepository.GetOrdersForCustomer(customerId, (OrderStatus) status);
         }
     }
 }

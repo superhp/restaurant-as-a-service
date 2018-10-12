@@ -19,7 +19,7 @@ namespace RestaurantPortal.Db.Repositories
         {
             var menu = _dbContext.MenuItems.Where(m => m.RestaurantId == restaurantId).ToList().Select(m => new MenuItemDto
             {
-                Id = m.MenuItemId,
+                MenuItemId = m.MenuItemId,
                 Image = m.Image,
                 CategoryId = m.MenuItemCategoryId,
                 Name = m.Name,

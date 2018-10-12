@@ -25,7 +25,7 @@ namespace RestaurantPortal.Db.Repositories
                 PurchasedMenuItems = order.Items.Select(x => new OrderMenuItem
                     {
                         OrderId = order.OrderId,
-                        MenuItemId = x.Id,
+                        MenuItemId = x.MenuItemId,
                         Quantity = x.Quantity
                     })
                     .ToList()
@@ -44,20 +44,56 @@ namespace RestaurantPortal.Db.Repositories
                 .Include(x => x.PurchasedMenuItems)
                 .ThenInclude(x => x.MenuItem)
                 .ToList();
-            return orders.Count != 0 ? orders.Select(x =>
-            {
-                return new OrderDto()
+            return orders.Count != 0 ? FormOrderList(orders) : new List<OrderDto>();
+        }
+
+        public List<OrderDto> GetOrdersForCustomer(int customerId, OrderStatus status)
+        {
+            var statusId = (OrderStatusEnum)status;
+            var orders = _context.Orders
+                .Where(x => x.RestaurantId == customerId)
+                .Where(x => x.OrderStatus == statusId)
+                .Include(x => x.PurchasedMenuItems)
+                .ThenInclude(x => x.MenuItem)
+                .ToList();
+            return orders.Count != 0 ? FormOrderList(orders) : new List<OrderDto>();
+        }
+
+        public List<OrderDto> GetOrdersForCustomer(int customerId)
+        {
+            var orders = _context.Orders
+                .Where(x => x.RestaurantId == customerId)
+                .Include(x => x.PurchasedMenuItems)
+                .ThenInclude(x => x.MenuItem)
+                .ToList();
+            return orders.Count != 0 ? FormOrderList(orders) : new List<OrderDto>();
+        }
+
+        private List<OrderDto> FormOrderList(List<Order> orders)
+        {
+            return orders.Select(x =>
                 {
-                    OrderId = x.OrderId,
-                    Table = x.Table,
-                    Status = status,
-                    Items = x.PurchasedMenuItems.Select(y => new MenuItemDto()
+                    return new OrderDto()
                     {
-                        Name = y.MenuItem.Name,
-                        Quantity = y.Quantity
-                    }).ToList()
-                };
-            }).ToList() : new List<OrderDto>();
+                        OrderId = x.OrderId,
+                        Table = x.Table,
+                        Status = (OrderStatus) x.OrderStatus,
+                        CustomerId = x.CustomerId,
+                        RestaurantId = x.RestaurantId,
+                        PaidPrice = x.PaidPrice,
+                        Items = x.PurchasedMenuItems.Select(y => new MenuItemDto()
+                            {
+                                MenuItemId = y.MenuItemId,
+                                Image = y.MenuItem.Image,
+                                Price = y.MenuItem.Price,
+                                CategoryId = y.MenuItem.MenuItemCategoryId,
+                                Name = y.MenuItem.Name,
+                                Quantity = y.Quantity
+                            })
+                            .ToList()
+                    };
+                })
+                .ToList();
         }
     }
 }
