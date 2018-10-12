@@ -34,40 +34,15 @@ namespace RestaurantPortal.Db.Migrations
                 });
 
             migrationBuilder.CreateTable(
-                name: "Orders",
-                columns: table => new
-                {
-                    OrderId = table.Column<int>(nullable: false)
-                        .Annotation("SqlServer:ValueGenerationStrategy", SqlServerValueGenerationStrategy.IdentityColumn),
-                    MenuCategoryId = table.Column<int>(nullable: false),
-                    MenuItemCategoryId = table.Column<int>(nullable: true),
-                    CustomerId = table.Column<int>(nullable: false),
-                    PaidPrice = table.Column<float>(nullable: false),
-                    Table = table.Column<string>(nullable: true),
-                    OrderStatus = table.Column<int>(nullable: false)
-                },
-                constraints: table =>
-                {
-                    table.PrimaryKey("PK_Orders", x => x.OrderId);
-                    table.ForeignKey(
-                        name: "FK_Orders_MenuItemCategories_MenuItemCategoryId",
-                        column: x => x.MenuItemCategoryId,
-                        principalTable: "MenuItemCategories",
-                        principalColumn: "MenuItemCategoryId",
-                        onDelete: ReferentialAction.Restrict);
-                });
-
-            migrationBuilder.CreateTable(
                 name: "MenuItems",
                 columns: table => new
                 {
                     MenuItemId = table.Column<int>(nullable: false)
                         .Annotation("SqlServer:ValueGenerationStrategy", SqlServerValueGenerationStrategy.IdentityColumn),
                     RestaurantId = table.Column<int>(nullable: false),
-                    MenuCategoryId = table.Column<int>(nullable: false),
-                    MenuItemCategoryId = table.Column<int>(nullable: true),
+                    MenuItemCategoryId = table.Column<int>(nullable: false),
                     Name = table.Column<string>(nullable: true),
-                    Price = table.Column<float>(nullable: false),
+                    Price = table.Column<decimal>(nullable: false),
                     Image = table.Column<string>(nullable: true)
                 },
                 constraints: table =>
@@ -78,7 +53,7 @@ namespace RestaurantPortal.Db.Migrations
                         column: x => x.MenuItemCategoryId,
                         principalTable: "MenuItemCategories",
                         principalColumn: "MenuItemCategoryId",
-                        onDelete: ReferentialAction.Restrict);
+                        onDelete: ReferentialAction.Cascade);
                     table.ForeignKey(
                         name: "FK_MenuItems_Restaurants_RestaurantId",
                         column: x => x.RestaurantId,
@@ -88,9 +63,33 @@ namespace RestaurantPortal.Db.Migrations
                 });
 
             migrationBuilder.CreateTable(
+                name: "Orders",
+                columns: table => new
+                {
+                    OrderId = table.Column<int>(nullable: false)
+                        .Annotation("SqlServer:ValueGenerationStrategy", SqlServerValueGenerationStrategy.IdentityColumn),
+                    RestaurantId = table.Column<int>(nullable: false),
+                    CustomerId = table.Column<int>(nullable: false),
+                    PaidPrice = table.Column<decimal>(nullable: false),
+                    Table = table.Column<string>(nullable: true),
+                    OrderStatus = table.Column<int>(nullable: false)
+                },
+                constraints: table =>
+                {
+                    table.PrimaryKey("PK_Orders", x => x.OrderId);
+                    table.ForeignKey(
+                        name: "FK_Orders_Restaurants_RestaurantId",
+                        column: x => x.RestaurantId,
+                        principalTable: "Restaurants",
+                        principalColumn: "RestaurantId",
+                        onDelete: ReferentialAction.Restrict);
+                });
+
+            migrationBuilder.CreateTable(
                 name: "OrderMenuItems",
                 columns: table => new
                 {
+                    OrderMenuItemId = table.Column<int>(nullable: false),
                     OrderId = table.Column<int>(nullable: false),
                     MenuItemId = table.Column<int>(nullable: false),
                     Quantity = table.Column<int>(nullable: false)
@@ -128,9 +127,9 @@ namespace RestaurantPortal.Db.Migrations
                 column: "MenuItemId");
 
             migrationBuilder.CreateIndex(
-                name: "IX_Orders_MenuItemCategoryId",
+                name: "IX_Orders_RestaurantId",
                 table: "Orders",
-                column: "MenuItemCategoryId");
+                column: "RestaurantId");
         }
 
         protected override void Down(MigrationBuilder migrationBuilder)
@@ -145,10 +144,10 @@ namespace RestaurantPortal.Db.Migrations
                 name: "Orders");
 
             migrationBuilder.DropTable(
-                name: "Restaurants");
+                name: "MenuItemCategories");
 
             migrationBuilder.DropTable(
-                name: "MenuItemCategories");
+                name: "Restaurants");
         }
     }
 }
