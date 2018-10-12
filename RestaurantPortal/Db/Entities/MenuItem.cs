@@ -11,12 +11,12 @@ namespace RestaurantPortal.Db.Entities
         [ForeignKey("RestaurantId")]
         public virtual Restaurant Restaurant { get; set; }
 
-        public int MenuCategoryId { get; set; }
+        public int MenuItemCategoryId { get; set; }
         [ForeignKey("MenuItemCategoryId")]
         public virtual MenuItemCategory MenuItemCategory { get; set; }
 
         public string Name { get; set; }
-        public float Price { get; set; }
+        public double Price { get; set; }
         public string Image { get; set; }
 
         public ICollection<OrderMenuItem> Orders { get; set; }

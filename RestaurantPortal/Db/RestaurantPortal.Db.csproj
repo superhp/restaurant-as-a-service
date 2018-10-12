@@ -24,7 +24,7 @@
   </ItemGroup>
 
   <ItemGroup>
-    <Folder Include="Repositories\" />
+    <ProjectReference Include="..\RestaurantPortal.Models\RestaurantPortal.Models.csproj" />
   </ItemGroup>
 
 </Project>
