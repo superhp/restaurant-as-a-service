@@ -41,6 +41,7 @@ namespace RestaurantPortal
             });
 
             services.AddScoped<IMenuRepository, MenuRepository>();
+            services.AddScoped<IOrderRepository, OrderRepository>();
 
             var builder = new ContainerBuilder();
             builder.Populate(services);
