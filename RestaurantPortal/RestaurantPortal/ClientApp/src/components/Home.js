@@ -1,23 +1,143 @@
-import React from 'react';
-import { connect } from 'react-redux';
+﻿import React, { Component } from 'react';
+import ReactDOM from 'react-dom';
+import { DragDropContext, Droppable, Draggable } from 'react-beautiful-dnd';
 
-const Home = props => (
-  <div>
-    <h1>Hello, world!</h1>
-    <p>Welcome to your new single-page application, built with:</p>
-    <ul>
-      <li><a href='https://get.asp.net/'>ASP.NET Core</a> and <a href='https://msdn.microsoft.com/en-us/library/67ef8sbd.aspx'>C#</a> for cross-platform server-side code</li>
-      <li><a href='https://facebook.github.io/react/'>React</a> and <a href='https://redux.js.org/'>Redux</a> for client-side code</li>
-      <li><a href='http://getbootstrap.com/'>Bootstrap</a> for layout and styling</li>
-    </ul>
-    <p>To help you get started, we've also set up:</p>
-    <ul>
-      <li><strong>Client-side navigation</strong>. For example, click <em>Counter</em> then <em>Back</em> to return here.</li>
-      <li><strong>Development server integration</strong>. In development mode, the development server from <code>create-react-app</code> runs in the background automatically, so your client-side resources are dynamically built on demand and the page refreshes when you modify any file.</li>
-      <li><strong>Efficient production builds</strong>. In production mode, development-time features are disabled, and your <code>dotnet publish</code> configuration produces minified, efficiently bundled JavaScript files.</li>
-    </ul>
-    <p>The <code>ClientApp</code> subdirectory is a standard React application based on the <code>create-react-app</code> template. If you open a command prompt in that directory, you can run <code>npm</code> commands such as <code>npm test</code> or <code>npm install</code>.</p>
-  </div>
+const move = (source, destination, droppableSource, droppableDestination) => {
+	const sourceClone = Array.from(source);
+	const destClone = Array.from(destination);
+	const [removed] = sourceClone.splice(droppableSource.index, 1);
+
+	destClone.splice(droppableDestination.index, 0, removed);
+
+	const result = {};
+	result[droppableSource.droppableId] = sourceClone;
+	result[droppableDestination.droppableId] = destClone;
+
+	return result;
+};
+
+const grid = 8;
+
+const getItemStyle = (isDragging, draggableStyle) => ({
+	// some basic styles to make the items look a bit nicer
+	userSelect: 'none',
+	padding: grid * 2,
+	margin: `0 0 ${grid}px 0`,
+
+	// change background colour if dragging
+	background: isDragging ? 'lightgreen' : 'grey',
+
+	// styles we need to apply on draggables
+	...draggableStyle
+});
+
+const getListStyle = isDraggingOver => ({
+	background: isDraggingOver ? 'lightblue' : 'lightgrey',
+	padding: grid,
+	width: 250
+});
+
+class Home extends Component {
+	state = {
+		newOrders: [{ id: 'item1', content: 'item1' }, { id: 'item2', content: 'item2' }, { id: 'item3', content: 'item3' }],
+		processingOrders: [{ id: 'item4', content: 'item4' }, { id: 'item5', content: 'item5' }],
+		finishedOrders: [{ id: 'item6', content: 'item6' }]
+	};
+
+	id2List = {
+		droppable: 'newOrders',
+		droppable2: 'processingOrders',
+		droppable3: 'finishedOrders'
+	};
+
+	getList = id => this.state[this.id2List[id]];
+
+	onDragEnd = inp => {
+		const { source, destination } = inp;
+
+		// dropped outside the list
+		if (!destination) {
+			return;
+		} 
+
+		if (source.droppableId === 'droppable' && destination.droppableId === 'droppable2') {
+			const result = move(
+				this.getList(source.droppableId),
+				this.getList(destination.droppableId),
+				source,
+				destination
+			);
+
+			this.setState({
+				newOrders: result.droppable,
+				processingOrders: result.droppable2
+			});
+		}
+
+		if (source.droppableId === 'droppable2' && destination.droppableId === 'droppable3') {
+			const result = move(
+				this.getList(source.droppableId),
+				this.getList(destination.droppableId),
+				source,
+				destination
+			);
+
+			this.setState({
+				processingOrders: result.droppable2,
+				finishedOrders: result.droppable3
+			});
+		}
+	};
+
+	render() {
+		return (
+			<DragDropContext onDragEnd={this.onDragEnd}>
+
+				<div className="Orders">
+					<div>
+						{droppable(this.state.newOrders, "droppable")} 
+					</div>
+					<div>
+						{droppable(this.state.processingOrders, "droppable2")}
+					</div>
+					<div>
+						{droppable(this.state.finishedOrders, "droppable3")}
+					</div>
+				</div>
+			</DragDropContext>
+		);
+	}
+}
+
+const droppable = (items, droppableid) => (
+	<Droppable droppableId={droppableid}>
+		{(provided, snapshot) => (
+			<div
+				ref={provided.innerRef}
+				style={getListStyle(snapshot.isDraggingOver)}>
+				{items.map((item, index) => (
+					<Draggable
+						key={item.id}
+						draggableId={item.id}
+						index={index}>
+						{(provided, snapshot) => (
+							<div
+								ref={provided.innerRef}
+								{...provided.draggableProps}
+								{...provided.dragHandleProps}
+								style={getItemStyle(
+									snapshot.isDragging,
+									provided.draggableProps.style
+								)}>
+								{item.content}
+							</div>
+						)}
+					</Draggable>
+				))}
+				{provided.placeholder}
+			</div>
+		)}
+	</Droppable>
 );
 
-export default connect()(Home);
+export default Home;

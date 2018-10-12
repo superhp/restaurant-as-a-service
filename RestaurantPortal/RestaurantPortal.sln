@@ -5,7 +5,9 @@ VisualStudioVersion = 15.0.27703.2042
 MinimumVisualStudioVersion = 10.0.40219.1
 Project("{9A19103F-16F7-4668-BE54-9A1E7A4F7556}") = "RestaurantPortal", "RestaurantPortal\RestaurantPortal.csproj", "{103A2E25-2926-46B3-922A-32B84533F70F}"
 EndProject
-Project("{FAE04EC0-301F-11D3-BF4B-00C04F79EFBC}") = "Db", "Db\Db.csproj", "{B42220CA-271C-4BEB-8A04-2172955E5546}"
+Project("{9A19103F-16F7-4668-BE54-9A1E7A4F7556}") = "RestaurantPortal.Db", "Db\RestaurantPortal.Db.csproj", "{B42220CA-271C-4BEB-8A04-2172955E5546}"
+EndProject
+Project("{9A19103F-16F7-4668-BE54-9A1E7A4F7556}") = "RestaurantPortal.Models", "RestaurantPortal.Models\RestaurantPortal.Models.csproj", "{8C4DD6EE-88F6-4057-82B6-57DDCEF071F3}"
 EndProject
 Global
 	GlobalSection(SolutionConfigurationPlatforms) = preSolution
@@ -21,6 +23,10 @@ Global
 		{B42220CA-271C-4BEB-8A04-2172955E5546}.Debug|Any CPU.Build.0 = Debug|Any CPU
 		{B42220CA-271C-4BEB-8A04-2172955E5546}.Release|Any CPU.ActiveCfg = Release|Any CPU
 		{B42220CA-271C-4BEB-8A04-2172955E5546}.Release|Any CPU.Build.0 = Release|Any CPU
+		{8C4DD6EE-88F6-4057-82B6-57DDCEF071F3}.Debug|Any CPU.ActiveCfg = Debug|Any CPU
+		{8C4DD6EE-88F6-4057-82B6-57DDCEF071F3}.Debug|Any CPU.Build.0 = Debug|Any CPU
+		{8C4DD6EE-88F6-4057-82B6-57DDCEF071F3}.Release|Any CPU.ActiveCfg = Release|Any CPU
+		{8C4DD6EE-88F6-4057-82B6-57DDCEF071F3}.Release|Any CPU.Build.0 = Release|Any CPU
 	EndGlobalSection
 	GlobalSection(SolutionProperties) = preSolution
 		HideSolutionNode = FALSE
