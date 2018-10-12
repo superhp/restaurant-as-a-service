@@ -2,14 +2,6 @@
 import ReactDOM from 'react-dom';
 import { DragDropContext, Droppable, Draggable } from 'react-beautiful-dnd';
 
-const reorder = (list, startIndex, endIndex) => {
-	const result = Array.from(list);
-	const [removed] = result.splice(startIndex, 1);
-	result.splice(endIndex, 0, removed);
-
-	return result;
-};
-
 const move = (source, destination, droppableSource, droppableDestination) => {
 	const sourceClone = Array.from(source);
 	const destClone = Array.from(destination);
@@ -60,29 +52,15 @@ class Home extends Component {
 
 	getList = id => this.state[this.id2List[id]];
 
-	onDragEnd = result => {
-		const { source, destination } = result;
+	onDragEnd = inp => {
+		const { source, destination } = inp;
 
 		// dropped outside the list
 		if (!destination) {
 			return;
-		}
+		} 
 
-		if (source.droppableId === destination.droppableId) {
-			const items = reorder(
-				this.getList(source.droppableId),
-				source.index,
-				destination.index
-			);
-
-			let state = { items };
-
-			if (source.droppableId === 'droppable2') {
-				state = { processingOrders: items };
-			}
-
-			this.setState(state);
-		} else {
+		if (source.droppableId === 'droppable' && destination.droppableId === 'droppable2') {
 			const result = move(
 				this.getList(source.droppableId),
 				this.getList(destination.droppableId),
@@ -95,6 +73,20 @@ class Home extends Component {
 				processingOrders: result.droppable2
 			});
 		}
+
+		if (source.droppableId === 'droppable2' && destination.droppableId === 'droppable3') {
+			const result = move(
+				this.getList(source.droppableId),
+				this.getList(destination.droppableId),
+				source,
+				destination
+			);
+
+			this.setState({
+				processingOrders: result.droppable2,
+				finishedOrders: result.droppable3
+			});
+		}
 	};
 
 	render() {
@@ -103,7 +95,7 @@ class Home extends Component {
 
 				<div className="Orders">
 					<div>
-						{droppable(this.state.newOrders, "droppable")}
+						{droppable(this.state.newOrders, "droppable")} 
 					</div>
 					<div>
 						{droppable(this.state.processingOrders, "droppable2")}
