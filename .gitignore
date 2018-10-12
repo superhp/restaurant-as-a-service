@@ -1,5 +1,7 @@
-﻿################################################################################
+################################################################################
 # This .gitignore file was automatically created by Microsoft(R) Visual Studio.
 ################################################################################
 
 /RestaurantPortal/.vs/RestaurantPortal/v15/Server/sqlite3
+RestaurantPortal/.vs/config/applicationhost.config
+RestaurantPortal/.vs/RestaurantPortal/v15/.suo

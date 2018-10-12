@@ -5,7 +5,7 @@ VisualStudioVersion = 15.0.27703.2042
 MinimumVisualStudioVersion = 10.0.40219.1
 Project("{9A19103F-16F7-4668-BE54-9A1E7A4F7556}") = "RestaurantPortal", "RestaurantPortal\RestaurantPortal.csproj", "{103A2E25-2926-46B3-922A-32B84533F70F}"
 EndProject
-Project("{FAE04EC0-301F-11D3-BF4B-00C04F79EFBC}") = "Db", "Db\Db.csproj", "{B42220CA-271C-4BEB-8A04-2172955E5546}"
+Project("{9A19103F-16F7-4668-BE54-9A1E7A4F7556}") = "RestaurantPortal.Db", "Db\RestaurantPortal.Db.csproj", "{B42220CA-271C-4BEB-8A04-2172955E5546}"
 EndProject
 Global
 	GlobalSection(SolutionConfigurationPlatforms) = preSolution
