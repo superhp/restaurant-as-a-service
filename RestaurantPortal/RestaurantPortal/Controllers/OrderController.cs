@@ -26,9 +26,9 @@ namespace RestaurantPortal.Controllers
         {
             return new OrdersForRestaurantDto
             {
-                CreatedOrders = _orderRepository.GetOrdersForRestaurant(restaurantId, OrderStatus.Ordered),
-                InProgressOrders = _orderRepository.GetOrdersForRestaurant(restaurantId, OrderStatus.InProgress),
-                DoneOrders = _orderRepository.GetOrdersForRestaurant(restaurantId, OrderStatus.Done)
+                NewOrders = _orderRepository.GetOrdersForRestaurant(restaurantId, OrderStatus.Ordered),
+                ProcessingOrders = _orderRepository.GetOrdersForRestaurant(restaurantId, OrderStatus.InProgress),
+                FinishedOrders = _orderRepository.GetOrdersForRestaurant(restaurantId, OrderStatus.Done)
             };
         }
 
