@@ -85,7 +85,7 @@ class MenuCreator extends Component {
 				</div>  
 			)}
 
-			<div className='ui card' style={{ margin: '1em 0', backgroundColor: '#90ee9054' }}>
+			<div className='ui card' style={{ margin: '1em 0', backgroundColor: '#FFE983' }}>
 				<input type='text' placeholder='Image URL' value={this.state.newItemImgUrl} onChange={e => this.setState({ newItemImgUrl: e.target.value })} />
 				<div className='content'>
 					<div className='description'><input type='text' placeholder='Name' value={this.state.newItemName} onChange={e => this.setState({ newItemName: e.target.value })} /></div>

@@ -47,3 +47,12 @@
 .ui.input {
 	font-size: 5px;
 }
+
+.rc-color-picker-wrap {
+	display: flow-root !important;
+    margin: 5px;
+}
+
+.color-input {
+    margin-right: 10px;
+}
