@@ -21,7 +21,7 @@
 }
 
 .navbar-brand {
-	height: 80px;
+	height: 120px;
 }
 
 .navbar-brand > img {
@@ -34,6 +34,14 @@
 
 .navbar .navbar-nav .active a, .navbar .navbar-nav .active a:hover, .navbar .navbar-nav .active a:focus {
 	background-color: rgba(0,0,0,0.2) !important;
+}
+
+.brand-form {
+	margin-top: 50px;
+}
+
+.margin-top-button {
+	margin-top: 20px;
 }
 
 .ui.input {

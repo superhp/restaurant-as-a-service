@@ -91,7 +91,7 @@ class MenuCreator extends Component {
 					<div className='description'><input type='text' placeholder='Name' value={this.state.newItemName} onChange={e => this.setState({ newItemName: e.target.value })} /></div>
 					<div className='description'><input type='text' placeholder='Price' value={this.state.newItemPrice} onChange={e => this.setState({ newItemPrice: e.target.value })} /></div>
 				</div>
-				<div class='extra content' style={{ display: 'flex' }}>
+				<div className='extra content' style={{ display: 'flex' }}>
 					<div><div className='description'><input type='text' placeholder='Category' value={this.state.newItemType} onChange={e => this.setState({ newItemType: e.target.value })} /></div></div>
 					<div style={{ marginLeft: 'auto' }}><button className='ui button' role='button' onClick={() => this.createNewItem()}>Create</button></div>
 				</div>
