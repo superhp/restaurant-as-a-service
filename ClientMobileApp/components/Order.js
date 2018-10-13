@@ -1,8 +1,9 @@
 import React from 'react';
-import { Container, Body, Text, Spinner, Header, List, ListItem, Content, Left, Thumbnail, Right, Button, Separator, FooterTab, View } from 'native-base';
+import { Container, Body, Text, Spinner, Header, Card, ListItem, Content, Left, Thumbnail, Right, Button, CardItem, FooterTab } from 'native-base';
 import { api } from './Helper';
 import { StyleSheet, FlatList } from 'react-native';
 import OrderTotal from './OrderTotal';
+import Modal from "react-native-modal";
 
 export default class Order extends React.Component {
     constructor(props) {
@@ -13,8 +14,9 @@ export default class Order extends React.Component {
             tableId: 0,
             count: 0,
             menu: [],
-            order: [],
-            categories: []
+            showOrder: false,
+            categories: [],
+            restaurant: {}
         };
     }
 
@@ -33,6 +35,9 @@ export default class Order extends React.Component {
             restaurantId: splitData[0],
             tableId: splitData[1]
         }, () => {
+            fetch(api + 'restaurant/' + this.state.restaurantId)
+                .then(res => res.json())
+                .then(data => this.setState({ restaurant: data }))
             fetch(api + 'category')
                 .then(res => res.json())
                 .then(data => this.setState({ categories: data }))
@@ -52,7 +57,6 @@ export default class Order extends React.Component {
             //items[items.indexOf(x => x.menuItemId === id)] = item;
         }
         this.setState({ menu: items })
-        this.forceUpdate()
     }
 
     removeItem(id, quantity) {
@@ -65,15 +69,57 @@ export default class Order extends React.Component {
             //items[items.indexOf(x => x.menuItemId === id)] = item;
         }
         this.setState({ menu: items })
-        this.forceUpdate()
+    }
+
+    triggerShowOrder = () => {
+        let boo = !this.state.showOrder;
+        this.setState({ showOrder: boo })
+    }
+
+    onOrderNowPressed = () => {
+        // {
+        //     "restaurantId": 1,
+        //     "customerId": 1,
+        //     "paidPrice": 10.5,
+        //     "table": "best-table",
+        //     "items": [
+        //         {
+        //             "quantity": 1,
+        //             "menuItemId": 2
+        //         }
+        //     ],
+        //     "status": 0
+        // }
+
+        fetch(api + 'order', {
+            method: 'POST',
+            headers: {
+                Accept: 'application/json',
+                'Content-Type': 'application/json',
+            },
+            body: JSON.stringify({
+                restaurantId: this.state.restaurantId,
+                customerId: 1,
+                table: this.state.tableId.toString(),
+                items: this.state.menu.filter(m => m.quantity !== 0).map(m => Object({ quantity: m.quantity, menuItemId: m.menuItemId })),
+                status: 0
+            }),
+        })
+            .then(res => res.json())
+            .then(data => {
+                console.log(data)
+                this.setState({ showOrder: false })
+                this.props.navigation.navigate('OrderStatus', {
+                    orderId: data,
+                    restaurantId: this.state.restaurantId
+                });
+            })
     }
 
     render() {
         let total = Math.round(this.state.menu.reduce(function (prev, cur) {
             return prev + cur.price * cur.quantity;
-        }, 0)* 100) / 100;
-
-        console.log(total)
+        }, 0) * 100) / 100;
 
         let footerHidden = total === 0;
 
@@ -84,10 +130,16 @@ export default class Order extends React.Component {
                 </Container>
             );
         }
-        console.log(this.state.menu);
         return (
             <Container>
-                <Header />
+                <Header style={{backgroundColor: this.state.restaurant.mainColor}}>
+                    <Right>
+                        <Thumbnail large source={{ uri: this.state.restaurant.logo }} />
+                    </Right>
+                    <Body>
+                        <Text style={{fontSize: 18, color: this.state.restaurant.secondaryColor}}>{this.state.restaurant.name}</Text>
+                    </Body>
+                </Header>
                 <Content>
                     <FlatList data={this.state.menu} extraData={this.state} renderItem={({ item }) => (
                         <ListItem thumbnail>
@@ -95,51 +147,79 @@ export default class Order extends React.Component {
                                 <Thumbnail square large source={{ uri: item.image }} />
                             </Left>
                             <Body>
-                                <Text>{item.name}</Text>
-                                <Text note numberOfLines={1}> </Text>
-                                <Text note style={styles.price} numberOfLines={1}>{item.price}</Text>
+                                <Text style={{fontSize: 18}}>{item.name}</Text>
+                                <Text note numberOfLines={1} style={{fontSize: 18}}> </Text>
+                                <Text note style={{fontSize: 18}} numberOfLines={1}>{item.price}</Text>
                             </Body>
                             <Right>
-                                <Button transparent onPress={() => this.removeItem(item.menuItemId, 1)}>
-                                    <Text style={styles.selectionButtons}>-</Text>
+                                <Button style={{backgroundColor: this.state.restaurant.mainColor}} onPress={() => this.removeItem(item.menuItemId, 1)}>
+                                    <Text style={{ color: this.state.restaurant.secondaryColor, fontSize: 24 }}>-</Text>
                                 </Button>
                             </Right>
                             <Right>
-                                <Text style={styles.itemCount}>{item.quantity}</Text>
+                                <Text style={{fontSize: 18}}>{item.quantity}</Text>
                             </Right>
                             <Right>
-                                <Button transparent onPress={() => this.addItem(item.menuItemId, 1)}>
-                                    <Text style={styles.selectionButtons}>+</Text>
+                                <Button style={{backgroundColor: this.state.restaurant.mainColor}} onPress={() => this.addItem(item.menuItemId, 1)}>
+                                    <Text style={{ color: this.state.restaurant.secondaryColor, fontSize: 24 }}>+</Text>
                                 </Button>
                             </Right>
                         </ListItem>
-                    )} keyExtractor={item => item.name}>
+                    )} keyExtractor={item => item.name + item.menuItemId}>
                     </FlatList>
                 </Content>
-                <OrderTotal hide={footerHidden}>
-                    <FooterTab>
+                <OrderTotal hide={footerHidden || this.state.showOrder} style={{backgroundColor: this.state.restaurant.mainColor}}>
+                    <FooterTab style={{backgroundColor: this.state.restaurant.mainColor}}>
                         <Left>
-                            <Text style={styles.footerText}>Order Total</Text>
+                            <Text style={{fontSize: 18, color: this.state.restaurant.secondaryColor, marginLeft: 10}}>Order Total</Text>
                         </Left>
                         <Right>
-                            <Text style={styles.footerText}>{total}</Text>
+                            <Text style={{fontSize: 18, color: this.state.restaurant.secondaryColor}}>{total}</Text>
                         </Right>
                         <Right style={styles.marginZero}>
-                            <Button transparent><Text style={styles.total}>View</Text></Button>
+                            <Button transparent onPress={() => this.triggerShowOrder()}><Text style={{fontSize: 18, color: this.state.restaurant.secondaryColor}}>View</Text></Button>
                         </Right>
                     </FooterTab>
                 </OrderTotal>
+                <Modal isVisible={this.state.showOrder}>
+                    <Card>
+                        <CardItem header bordered>
+                            <Left>
+                                <Text style={{fontSize: 18, color: this.state.restaurant.secondaryColor}}>Order Total</Text>
+                            </Left>
+                            <Right>
+                                <Text style={{fontSize: 18, color: this.state.restaurant.secondaryColor}}>{total}</Text>
+                            </Right>
+                            <Right style={styles.marginZero}>
+                                <Button transparent onPress={this.triggerShowOrder}><Text style={{fontSize: 18, color: this.state.restaurant.secondaryColor}}>Hide</Text></Button>
+                            </Right>
+                        </CardItem>
+                        <FlatList data={this.state.menu.filter(m => m.quantity !== 0)} extraData={this.state} renderItem={({ item }) => (
+                            <CardItem>
+                                <Left>
+                                    <Text style={{fontSize: 18, color: this.state.restaurant.secondaryColor}}>{item.quantity}x {item.name}</Text>
+                                </Left>
+                                <Right>
+                                    <Text style={{fontSize: 18, color: this.state.restaurant.secondaryColor}}>{item.price}</Text>
+                                </Right>
+                            </CardItem>
+                        )} keyExtractor={item => item.name + '_totals' + item.menuItemId}>
+                        </FlatList>
+                        <Button block style={{ backgroundColor: this.state.restaurant.mainColor, marginTop: 10, marginLeft: 5, marginRight: 5, marginBottom: 3 }}
+                            onPress={() => this.onOrderNowPressed()}>
+                            <Text style={{fontSize: 18, color: this.state.restaurant.secondaryColor}}>Order Now!</Text>
+                        </Button>
+                    </Card>
+                </Modal>
             </Container>
         );
     }
 }
 
 const styles = StyleSheet.create({
-    price: {
-        color: 'blue',
-    },
     total: {
-        color: 'white',
+        color: 'black',
+        fontSize: 18
     },
     selectionButtons: {
         fontSize: 24
@@ -147,11 +227,19 @@ const styles = StyleSheet.create({
     itemCount: {
         fontSize: 20
     },
+    globalFontSize: {
+        fontSize: 18
+    },
     footerText: {
-        color: 'white',
-        marginLeft: 10
+        color: 'black',
+        marginLeft: 10,
+        fontSize: 18
     },
     marginZero: {
         marginLeft: 0
+    },
+    headerText: {
+        fontSize: 18,
+        color: 'black'
     }
 });

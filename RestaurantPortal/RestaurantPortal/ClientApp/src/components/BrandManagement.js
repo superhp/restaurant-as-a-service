@@ -1,6 +1,8 @@
 import React, { Component } from 'react';
 import ReactDOM from 'react-dom';
 import { connect } from 'react-redux';
+import ColorPicker from 'rc-color-picker';
+import 'rc-color-picker/assets/index.css';
 
 class BrandManagement extends Component {	
 
@@ -13,7 +15,7 @@ class BrandManagement extends Component {
             this.state = {
                 restaurant: {}
             };
-            
+
             fetch('api/restaurant/1')
             .then(resp => resp.json())
             .then(resp => {
@@ -65,20 +67,53 @@ class BrandManagement extends Component {
         });
     }
 
+    updateSecondaryColor(evt) {
+        console.log(evt);
+        let restaurant = this.state.restaurant;
+        restaurant.secondaryColor = evt.target.value;
+        this.setState({
+            restaurant: restaurant
+        });
+    }
+
+    colorPickerSecondary = (color) => {
+        let restaurant = this.state.restaurant;
+        restaurant.secondaryColor = color.color;
+        this.setState({
+            restaurant: restaurant
+        });
+    }
+
+    colorPickerMain = (color) => {
+        let restaurant = this.state.restaurant;
+        restaurant.mainColor = color.color;
+        this.setState({
+            restaurant: restaurant
+        });
+    }
+
     render() {
         return (
             <div className='brand-form container'>
                 <div className="col-md-12">
-                    <div className="input-group">
+                    <div className="input-group col-md-4">
                         <label>Logotype</label>
                         <input type="text" value={this.state.restaurant.logo} onChange={evt => this.updateLogo(evt)} className="form-control" name="logo" placeholder="Enter URL"/>
                     </div>
                 </div>
 
                 <div className="col-md-12">
-                    <div className="input-group">
-                        <label>Main color</label>
-                        <input type="text" value={this.state.restaurant.mainColor} onChange={evt => this.updateMainColor(evt)} className="form-control" name="mainColor" placeholder="Color code with # (e.g. #000000)"/>
+                    <div className="input-group col-md-4">
+                        <label>Primary color</label>
+                        <input type="text" value={this.state.restaurant.mainColor} onChange={evt => this.updateMainColor(evt)} className="form-control color-input" name="mainColor" placeholder="Color code with # (e.g. #000000)"/>
+                        <ColorPicker color={this.state.restaurant.mainColor} onChange={this.colorPickerMain} placement="bottomLeft" />
+                    </div>
+                </div>
+                <div className="col-md-12">
+                    <div className="input-group col-md-4">
+                        <label>Secondary color</label>
+                        <input type="text" value={this.state.restaurant.secondaryColor} onChange={evt => this.updateSecondaryColor(evt)} className="form-control color-input" name="secondaryColor" placeholder="Color code with # (e.g. #000000)"/>
+                        <ColorPicker color={this.state.restaurant.secondaryColor} onChange={this.colorPickerSecondary} placement="bottomLeft" />
                     </div>
                 </div>
 
