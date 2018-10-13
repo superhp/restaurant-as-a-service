@@ -82,7 +82,7 @@ class Home extends Component {
 
 	componentWillMount = () => {
 		this.fetchOrders(); 
-		setInterval(() => this.fetchOrders(), 3000); 		
+		setInterval(() => this.fetchOrders(), 3000); 
 	}
 	
 	getList = id => this.state[this.id2List[id]];
