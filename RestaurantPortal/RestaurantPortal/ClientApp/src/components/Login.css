@@ -3,8 +3,15 @@
 		padding: 60px 0;
 	}
 
-		.Login form {
-			margin: 0 auto;
-			max-width: 320px;
-		}
+	.Login form {
+		margin: 0 auto;
+		max-width: 320px;
+	}
+
+	.menu-layout {
+		display: grid;
+		grid-template-columns: 300px 300px 300px;
+		grid-gap: 40px;
+		margin-top: 50px;
+	}
 }

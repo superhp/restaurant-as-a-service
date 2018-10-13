@@ -16,7 +16,7 @@ namespace RestaurantPortal.Db.Repositories
             _dbContext = dbContext;
         }
 
-        public void UpsertMenuItem(MenuItemDto menuItemDto)
+        public int UpsertMenuItem(MenuItemDto menuItemDto)
         {
             var menuItem = new MenuItem
             {
@@ -38,6 +38,8 @@ namespace RestaurantPortal.Db.Repositories
             }
 
             _dbContext.SaveChanges();
+
+            return menuItem.MenuItemId;
         }
 
         public IEnumerable<MenuItemDto> GetMenu(int restaurantId)
@@ -65,6 +67,17 @@ namespace RestaurantPortal.Db.Repositories
                 Name = m.Name,
                 Price = m.Price
             };
+        }
+
+        public void DeleteMenuItem(int id)
+        {
+            var menuItem = _dbContext.MenuItems.Find(id);
+
+            if (menuItem == null) 
+                throw new ArgumentException($"No menu item with ID {id}");
+
+            _dbContext.MenuItems.Remove(menuItem);
+            _dbContext.SaveChanges();
         }
     }
 }
