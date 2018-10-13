@@ -14,7 +14,7 @@ class MenuCreator extends Component {
 	}; 
 
 	fetchMenuItems = () => {
-		fetch('api/menu/2')
+		fetch('api/menu/1')
 			.then(resp => resp.json())
 			.then(resp => {
 				this.setState({
@@ -76,7 +76,7 @@ class MenuCreator extends Component {
 					<img src={item.image} className='ui image' />
 					<div className='content'>
 						<div className='header'>{this.state.editMode && this.state.editMenuItemId === item.menuItemId ? <input type='text' value={item.name} onChange={(e) => this.editItem('name', e)} /> : item.name}</div>
-						<div className='description'>{this.state.editMode && this.state.editMenuItemId === item.menuItemId ? <input type='text' value={item.price} onChange={(e) => this.editItem('price', e)} /> : <p>Price: {item.price} euro</p>}</div>
+						<div className='description'>{this.state.editMode && this.state.editMenuItemId === item.menuItemId ? <input type='text' value={item.price} onChange={(e) => this.editItem('price', e)} /> : <p>Price: {item.price} €</p>}</div>
 					</div>
 					<div className='extra content' style={{ display: 'flex' }}>
 						<div style={{ fontWeight: 'bold' }}>{item.categoryId === 1 ? 'Food' : 'Drink'}</div>
