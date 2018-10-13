@@ -8,3 +8,5 @@ RestaurantPortal/.vs/RestaurantPortal/v15/.suo
 .vs/
 Debug/
 obj/
+/RestaurantPortal/RestaurantPortal/ClientApp/package-lock.json
+/RestaurantPortal/RestaurantPortal.Models/bin/Release/netcoreapp2.0

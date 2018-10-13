@@ -40,14 +40,16 @@ const getItemStyle = (isDragging, draggableStyle) => {
 const getListStyle = isDraggingOver => ({
 	background: isDraggingOver ? 'lightblue' : 'lightgrey',
 	padding: grid,
-	width: 350
+	width: 350,
+	minHeight: 54
 });
 
-class Home extends Component {
+class Home extends Component {	
+
 	state = {
-		newOrders: [{ id: 'item1', content: 'item1' }, { id: 'item2', content: 'item2' }, { id: 'item3', content: 'item3' }],
-		processingOrders: [{ id: 'item4', content: 'item4' }, { id: 'item5', content: 'item5' }],
-		finishedOrders: [{ id: 'item6', content: 'item6' }]
+		newOrders: [],
+		processingOrders: [],
+		finishedOrders: []
 	};
 
 	id2List = {
@@ -55,6 +57,19 @@ class Home extends Component {
 		droppable2: 'processingOrders',
 		droppable3: 'finishedOrders'
 	};
+
+	componentWillMount = () => {
+		fetch('api/order/restaurant/1')
+			.then(resp => resp.json())
+			.then(resp => {
+				this.setState({
+					newOrders: resp.newOrders,
+					processingOrders: resp.processingOrders,
+					finishedOrders: resp.finishedOrders 
+				}); 
+				console.log(resp);
+			}); 
+	}
 
 	getList = id => this.state[this.id2List[id]];
 
@@ -97,6 +112,7 @@ class Home extends Component {
 
 	render() {
 		return (
+			
 			<DragDropContext onDragEnd={this.onDragEnd}>
 
 				<div className="Orders">
@@ -130,16 +146,31 @@ class Home extends Component {
 	}
 }
 
-const droppable = (items, droppableid) => (
+const orderCard = order => (
+	<div>
+		<div style={{ borderBottom: '1px solid black', marginBottom: '12px'}}>
+			<p><b>Table: {order.table}</b></p>
+		</div>
+		{order.items.map(item => orderItemCard(item))}
+	</div>
+)
+
+const orderItemCard = item => (
+	<div key={item.menuItemId}>
+		<p>{item.quantity} x {item.name}</p>
+	</div>
+)
+
+const droppable = (orders, droppableid) => (
 	<Droppable droppableId={droppableid}>
 		{(provided, snapshot) => (
 			<div
 				ref={provided.innerRef}
 				style={getListStyle(snapshot.isDraggingOver)}>
-				{items.map((item, index) => (
+				{orders.map((order, index) => (
 					<Draggable
-						key={item.id}
-						draggableId={item.id}
+						key={order.orderId}
+						draggableId={order.orderId}
 						index={index}>
 						{(provided, snapshot) => (
 							<div
@@ -150,7 +181,7 @@ const droppable = (items, droppableid) => (
 									snapshot.isDragging,
 									provided.draggableProps.style
 								)}>
-								{item.content}
+								{orderCard(order)}
 							</div>
 						)}
 					</Draggable>
