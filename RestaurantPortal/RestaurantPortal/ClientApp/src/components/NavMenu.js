@@ -14,11 +14,16 @@ export default props => (
     </Navbar.Header>
     <Navbar.Collapse>
       <Nav>
-        <LinkContainer to={'/'} exact>
+        <LinkContainer to={'/manage-orders'} exact>
           <NavItem>
             <Glyphicon glyph='home' /> Orders Management
           </NavItem>
-        </LinkContainer>   
+		</LinkContainer>  
+		<LinkContainer to={'/manage-menu'} exact>
+			<NavItem>
+				<Glyphicon glyph='book' /> Orders Management
+			</NavItem>
+		</LinkContainer> 
       </Nav>
     </Navbar.Collapse>
   </Navbar>

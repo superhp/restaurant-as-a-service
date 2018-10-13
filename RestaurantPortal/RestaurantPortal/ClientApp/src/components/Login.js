@@ -24,7 +24,7 @@ export default class Login extends Component {
 
 	handleSubmit = event => {
 		event.preventDefault();
-		this.props.history.push('/manage');
+		this.props.history.push('/manage-orders');
 	}
 
 	render() {
