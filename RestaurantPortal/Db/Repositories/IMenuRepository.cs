@@ -7,5 +7,6 @@ namespace RestaurantPortal.Db.Repositories
     public interface IMenuRepository
     {
         IEnumerable<MenuItemDto> GetMenu(int restaurantId);
+        MenuItemDto GetMenuItem(int itemId);
     }
 }

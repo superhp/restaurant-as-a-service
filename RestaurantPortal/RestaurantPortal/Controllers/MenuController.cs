@@ -27,5 +27,13 @@ namespace RestaurantPortal.Controllers
 
             return menu;
         }
+
+        [HttpGet("item/{itemId}")]
+        public MenuItemDto GetMenuItem(int itemId)
+        {
+            var menuItem = _menuRepository.GetMenuItem(itemId);
+
+            return menuItem;
+        }
     }
 }
