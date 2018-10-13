@@ -2,6 +2,11 @@
 import ReactDOM from 'react-dom';
 import { DragDropContext, Droppable, Draggable } from 'react-beautiful-dnd';
 
+const changeOrderStatus = (orderId, newStatus) => {
+	fetch(`api/order/${orderId}/${newStatus}`, { method: 'PATCH' })
+		.then(() => console.log('Order status changed'));
+}
+
 const move = (source, destination, droppableSource, droppableDestination) => {
 	const sourceClone = Array.from(source);
 	const destClone = Array.from(destination);
@@ -12,6 +17,8 @@ const move = (source, destination, droppableSource, droppableDestination) => {
 	const result = {};
 	result[droppableSource.droppableId] = sourceClone;
 	result[droppableDestination.droppableId] = destClone;
+
+	changeOrderStatus(removed.orderId, removed.status + 1); 
 
 	return result;
 };
@@ -72,7 +79,7 @@ class Home extends Component {
 				console.log(resp);
 			}); 
 	}
-
+	
 	getList = id => this.state[this.id2List[id]];
 
 	onDragEnd = inpt => {
