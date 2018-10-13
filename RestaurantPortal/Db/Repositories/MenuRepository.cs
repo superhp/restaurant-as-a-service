@@ -16,6 +16,30 @@ namespace RestaurantPortal.Db.Repositories
             _dbContext = dbContext;
         }
 
+        public void UpsertMenuItem(MenuItemDto menuItemDto)
+        {
+            var menuItem = new MenuItem
+            {
+                MenuItemId = menuItemDto.MenuItemId,
+                Image = menuItemDto.Image,
+                MenuItemCategoryId = menuItemDto.CategoryId,
+                Name = menuItemDto.Name,
+                RestaurantId = menuItemDto.RestaurantId,
+                Price = menuItemDto.Price,
+            };
+
+            if (menuItemDto.MenuItemId == 0)
+            {
+                _dbContext.MenuItems.Add(menuItem);
+            }
+            else
+            {
+                _dbContext.MenuItems.Update(menuItem);
+            }
+
+            _dbContext.SaveChanges();
+        }
+
         public IEnumerable<MenuItemDto> GetMenu(int restaurantId)
         {
             var menu = _dbContext.MenuItems.Where(m => m.RestaurantId == restaurantId).ToList().Select(ToMenuItemDto);
@@ -35,6 +59,7 @@ namespace RestaurantPortal.Db.Repositories
             return new MenuItemDto
             {
                 MenuItemId = m.MenuItemId,
+                RestaurantId = m.RestaurantId,
                 Image = m.Image,
                 CategoryId = m.MenuItemCategoryId,
                 Name = m.Name,
