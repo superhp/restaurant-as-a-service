@@ -8,5 +8,6 @@ namespace RestaurantPortal.Db.Repositories
     {
         IEnumerable<MenuItemDto> GetMenu(int restaurantId);
         MenuItemDto GetMenuItem(int itemId);
+        void UpsertMenuItem(MenuItemDto menuItemDto);
     }
 }

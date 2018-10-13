@@ -89,7 +89,8 @@ namespace RestaurantPortal.Db.Repositories
                                 Price = y.MenuItem.Price,
                                 CategoryId = y.MenuItem.MenuItemCategoryId,
                                 Name = y.MenuItem.Name,
-                                Quantity = y.Quantity
+                                Quantity = y.Quantity,
+                                RestaurantId = x.RestaurantId
                             })
                             .ToList()
                     };
@@ -125,7 +126,8 @@ namespace RestaurantPortal.Db.Repositories
                     MenuItemId = i.MenuItemId,
                     Name = i.MenuItem.Name,
                     Price = i.MenuItem.Price,
-                    Quantity = i.Quantity
+                    Quantity = i.Quantity,
+                    RestaurantId = order.RestaurantId
 
                 }).ToList(),
                 OrderId = order.OrderId,
