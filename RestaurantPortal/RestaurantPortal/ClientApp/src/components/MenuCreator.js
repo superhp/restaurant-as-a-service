@@ -73,7 +73,7 @@ class MenuCreator extends Component {
 		<div className='menu-layout'>
 			{this.state.items.map(item =>
 				<div className='ui card' style={{ margin: '1em 0' }}>
-					<img src='/images/avatar/large/matthew.png' className='ui image' />
+					<img src={item.image} className='ui image' />
 					<div className='content'>
 						<div className='header'>{this.state.editMode && this.state.editMenuItemId === item.menuItemId ? <input type='text' value={item.name} onChange={(e) => this.editItem('name', e)} /> : item.name}</div>
 						<div className='description'>{this.state.editMode && this.state.editMenuItemId === item.menuItemId ? <input type='text' value={item.price} onChange={(e) => this.editItem('price', e)} /> : <p>Price: {item.price} euro</p>}</div>

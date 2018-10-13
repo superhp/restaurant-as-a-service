@@ -2,7 +2,7 @@
 import { Route, Switch } from 'react-router';
 import Layout from './components/Layout';
 import Home from './components/Home';
-import MenuCreator from './components/Counter';
+import MenuCreator from './components/MenuCreator';
 import FetchData from './components/FetchData';
 import Login from './components/Login';
 import BrandManagement from './components/BrandManagement';
