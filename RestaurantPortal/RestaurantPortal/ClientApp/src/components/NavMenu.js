@@ -5,10 +5,10 @@ import { LinkContainer } from 'react-router-bootstrap';
 import './NavMenu.css';
 
 export default props => (
-  <Navbar inverse fixedTop fluid collapseOnSelect>
+  <Navbar fixedTop fluid collapseOnSelect style={{backgroundColor: props.restaurant.mainColor}}>
     <Navbar.Header>
       <Navbar.Brand>
-        <Link to={'/'}>Restaurant Portal</Link>
+        <Link to={'/'}><img src={props.restaurant.logo} height="110" /> Restaurant Portal</Link>
       </Navbar.Brand>
       <Navbar.Toggle />
     </Navbar.Header>
@@ -21,9 +21,14 @@ export default props => (
 		</LinkContainer>  
 		<LinkContainer to={'/manage-menu'} exact>
 			<NavItem>
-				<Glyphicon glyph='book' /> Orders Management
+				<Glyphicon glyph='book' /> Menu Management
 			</NavItem>
-		</LinkContainer> 
+		</LinkContainer>   
+        <LinkContainer to={'/brand'} exact>
+          <NavItem>
+            <Glyphicon glyph='cutlery' /> Brand Management
+          </NavItem>
+        </LinkContainer>   
       </Nav>
     </Navbar.Collapse>
   </Navbar>

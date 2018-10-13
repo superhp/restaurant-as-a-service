@@ -96,5 +96,13 @@ namespace RestaurantPortal.Controllers
         {
             _orderRepository.ChangeOrderStatus(orderId, status);
         }
+
+        [HttpGet("{id}")]
+        public OrderDto Get(int id)
+        {
+            var order = _orderRepository.GetOrder(id);
+
+            return order;
+        }
     }
 }

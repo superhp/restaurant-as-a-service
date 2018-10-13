@@ -19,3 +19,31 @@
 	font-weight: 700;
 	margin-bottom: 20px; 
 }
+
+.navbar-brand {
+	height: 120px;
+}
+
+.navbar-brand > img {
+	display: inline;
+}
+
+.navbar-default {
+	background-image: none;
+}
+
+.navbar .navbar-nav .active a, .navbar .navbar-nav .active a:hover, .navbar .navbar-nav .active a:focus {
+	background-color: rgba(0,0,0,0.2) !important;
+}
+
+.brand-form {
+	margin-top: 50px;
+}
+
+.margin-top-button {
+	margin-top: 20px;
+}
+
+.ui.input {
+	font-size: 5px;
+}

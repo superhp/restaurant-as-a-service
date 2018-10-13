@@ -48,24 +48,32 @@ class MenuCreator extends Component {
 
 	createNewItem = () => {
 		let item = {
-			categoryId: 1,
+			categoryId: this.state.newItemType,
 			restaurantId: 2,
 			name: this.state.newItemName,
 			price: this.state.newItemPrice,
-			image: ''
+			image: this.state.newItemImgUrl
 		};
 		fetch('api/menu/save', {
 			method: 'POST', body: JSON.stringify(item), headers: { "Content-Type": "application/json; charset=utf-8" }
 		})
 		.then(resp => resp.json())
-		.then((resp) => { console.log(resp); this.fetchMenuItems(); }); 
+			.then((resp) => {
+				console.log(resp);
+				this.fetchMenuItems();
+				this.state.newItemName = ''; 
+				this.state.newItemPrice = '';
+				this.state.newItemPictureUrl = '';
+				this.state.newItemImgUrl = '';
+				this.state.newItemType = ''; 
+			}); 
 	}
 
 	render = () => (
 		<div className='menu-layout'>
 			{this.state.items.map(item =>
 				<div className='ui card' style={{ margin: '1em 0' }}>
-					<img src='/images/avatar/large/matthew.png' className='ui image' />
+					<img src={item.image} className='ui image' />
 					<div className='content'>
 						<div className='header'>{this.state.editMode && this.state.editMenuItemId === item.menuItemId ? <input type='text' value={item.name} onChange={(e) => this.editItem('name', e)} /> : item.name}</div>
 						<div className='description'>{this.state.editMode && this.state.editMenuItemId === item.menuItemId ? <input type='text' value={item.price} onChange={(e) => this.editItem('price', e)} /> : <p>Price: {item.price} euro</p>}</div>
@@ -78,13 +86,13 @@ class MenuCreator extends Component {
 			)}
 
 			<div className='ui card' style={{ margin: '1em 0', backgroundColor: '#90ee9054' }}>
-				<img src='/images/avatar/large/matthew.png' className='ui image' />
+				<input type='text' placeholder='Image URL' value={this.state.newItemImgUrl} onChange={e => this.setState({ newItemImgUrl: e.target.value })} />
 				<div className='content'>
-					<div className='header'><input type='text' value={this.state.newItemName} onChange={e => this.setState({ newItemName: e.target.value })} /></div>
-					<div className='description'><input type='text' value={this.state.newItemPrice} onChange={e => this.setState({ newItemPrice: e.target.value })} /></div>
+					<div className='description'><input type='text' placeholder='Name' value={this.state.newItemName} onChange={e => this.setState({ newItemName: e.target.value })} /></div>
+					<div className='description'><input type='text' placeholder='Price' value={this.state.newItemPrice} onChange={e => this.setState({ newItemPrice: e.target.value })} /></div>
 				</div>
-				<div class='extra content' style={{ display: 'flex' }}>
-					<div style={{ fontWeight: 'bold' }}>Food</div>
+				<div className='extra content' style={{ display: 'flex' }}>
+					<div><div className='description'><input type='text' placeholder='Category' value={this.state.newItemType} onChange={e => this.setState({ newItemType: e.target.value })} /></div></div>
 					<div style={{ marginLeft: 'auto' }}><button className='ui button' role='button' onClick={() => this.createNewItem()}>Create</button></div>
 				</div>
 			</div>  
