@@ -37,9 +37,17 @@ namespace RestaurantPortal.Controllers
         }
 
         [HttpPost]
-        public void Save([FromBody] MenuItemDto menuItem)
+        public int Save([FromBody] MenuItemDto menuItem)
         {
-            _menuRepository.UpsertMenuItem(menuItem);
+            var id = _menuRepository.UpsertMenuItem(menuItem);
+
+            return id;
+        }
+
+        [HttpDelete("{id}")]
+        public void Delete(int id)
+        {
+            _menuRepository.DeleteMenuItem(id);
         }
     }
 }
