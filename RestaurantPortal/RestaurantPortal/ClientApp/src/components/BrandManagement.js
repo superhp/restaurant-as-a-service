@@ -13,7 +13,7 @@ class BrandManagement extends Component {
             this.state = {
                 restaurant: {}
             };
-            
+
             fetch('api/restaurant/1')
             .then(resp => resp.json())
             .then(resp => {
@@ -65,6 +65,15 @@ class BrandManagement extends Component {
         });
     }
 
+    updateSecondaryColor(evt) {
+        console.log(evt);
+        let restaurant = this.state.restaurant;
+        restaurant.secondaryColor = evt.target.value;
+        this.setState({
+            restaurant: restaurant
+        });
+    }
+
     render() {
         return (
             <div className='brand-form container'>
@@ -77,8 +86,15 @@ class BrandManagement extends Component {
 
                 <div className="col-md-12">
                     <div className="input-group">
-                        <label>Main color</label>
+                        <label>Primary color</label>
                         <input type="text" value={this.state.restaurant.mainColor} onChange={evt => this.updateMainColor(evt)} className="form-control" name="mainColor" placeholder="Color code with # (e.g. #000000)"/>
+                    </div>
+                </div>
+
+                <div className="col-md-12">
+                    <div className="input-group">
+                        <label>Secondary color</label>
+                        <input type="text" value={this.state.restaurant.secondaryColor} onChange={evt => this.updateSecondaryColor(evt)} className="form-control" name="secondaryColor" placeholder="Color code with # (e.g. #000000)"/>
                     </div>
                 </div>
 

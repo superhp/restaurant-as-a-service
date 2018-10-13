@@ -21,6 +21,7 @@ namespace RestaurantPortal.Db.Repositories
 
             restaurant.Logo = restaurantDto.Logo;
             restaurant.MainColor = restaurantDto.MainColor;
+            restaurant.SecondaryColor = restaurantDto.SecondaryColor;
 
             _dbContext.SaveChanges();
         }
@@ -37,6 +38,7 @@ namespace RestaurantPortal.Db.Repositories
                 Id = restaurant.RestaurantId,
                 Logo = restaurant.Logo,
                 MainColor = restaurant.MainColor,
+                SecondaryColor = restaurant.SecondaryColor,
                 Name = restaurant.Name
             };
         }
