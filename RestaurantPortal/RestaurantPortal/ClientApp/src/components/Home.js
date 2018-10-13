@@ -67,17 +67,22 @@ class Home extends Component {
 		droppable3: 'finishedOrders'
 	};
 
-	componentWillMount = () => {
+	fetchOrders = () => {
 		fetch('api/order/restaurant/1')
 			.then(resp => resp.json())
 			.then(resp => {
 				this.setState({
 					newOrders: resp.newOrders,
 					processingOrders: resp.processingOrders,
-					finishedOrders: resp.finishedOrders 
-				}); 
+					finishedOrders: resp.finishedOrders
+				});
 				console.log(resp);
 			}); 
+	}
+
+	componentWillMount = () => {
+		this.fetchOrders(); 
+		setInterval(() => this.fetchOrders(), 3000); 		
 	}
 	
 	getList = id => this.state[this.id2List[id]];
