@@ -86,13 +86,16 @@ class MenuCreator extends Component {
 			)}
 
 			<div className='ui card' style={{ margin: '1em 0', backgroundColor: '#FFE983' }}>
-				<input type='text' placeholder='Image URL' value={this.state.newItemImgUrl} onChange={e => this.setState({ newItemImgUrl: e.target.value })} />
+				<div className='content' style={{marginBottom: '-50px'}}>
+					<div className='header'>New Menu Item</div>
+				</div>
 				<div className='content'>
-					<div className='description'><input type='text' placeholder='Name' value={this.state.newItemName} onChange={e => this.setState({ newItemName: e.target.value })} /></div>
-					<div className='description'><input type='text' placeholder='Price' value={this.state.newItemPrice} onChange={e => this.setState({ newItemPrice: e.target.value })} /></div>
+					<div className='ui input' style={{ width: '100%' }}><input type='text' placeholder='Image URL' value={this.state.newItemImgUrl} onChange={e => this.setState({ newItemImgUrl: e.target.value })} /></div>
+					<div className='ui input' style={{ width: '100%' }}><input type='text' placeholder='Name' value={this.state.newItemName} onChange={e => this.setState({ newItemName: e.target.value })} /></div>
+					<div className='ui input' style={{ width: '100%' }}><input type='text' placeholder='Price' value={this.state.newItemPrice} onChange={e => this.setState({ newItemPrice: e.target.value })} /></div>
+					<div className='ui input' style={{ width: '100%' }}><input type='text' placeholder='Category' value={this.state.newItemType} onChange={e => this.setState({ newItemType: e.target.value })} /></div>
 				</div>
 				<div className='extra content' style={{ display: 'flex' }}>
-					<div><div className='description'><input type='text' placeholder='Category' value={this.state.newItemType} onChange={e => this.setState({ newItemType: e.target.value })} /></div></div>
 					<div style={{ marginLeft: 'auto' }}><button className='ui button' role='button' onClick={() => this.createNewItem()}>Create</button></div>
 				</div>
 			</div>  
