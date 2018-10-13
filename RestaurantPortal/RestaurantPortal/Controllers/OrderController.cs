@@ -1,7 +1,10 @@
-﻿using System.Collections.Generic;
+﻿using System;
+using System.Collections.Generic;
+using System.Linq;
 using Microsoft.AspNetCore.Mvc;
 using RestaurantPortal.Db.Repositories;
 using RestaurantPortal.Models;
+using Stripe;
 
 namespace RestaurantPortal.Controllers
 {
@@ -16,10 +19,58 @@ namespace RestaurantPortal.Controllers
         }
 
         [HttpPost]
-        public int CreateOrder([FromBody]OrderDto order)
+        public int CreateOrder([FromBody]OrderDto orderDto)
         {
-            var orderId = _orderRepository.SaveOrder(order);
-            return orderId;
+            try
+            {
+                var orderId = _orderRepository.SaveOrder(orderDto);
+                var order = _orderRepository.GetOrder(orderId);
+                var amount = order.Items.Sum(i => i.Price * i.Quantity);
+                _orderRepository.UpdateOrderAmount(order.OrderId, amount);
+                // Use Stripe's library to make request
+                var chargeOptions = new StripeChargeCreateOptions
+                {
+                    Amount = Convert.ToInt32(amount * 100),
+                    Currency = "eur",
+                    SourceTokenOrExistingSourceId = "tok_nl",
+                    Metadata = new Dictionary<string, string>
+                    {
+                        { "OrderId", order.OrderId.ToString()}
+                    }
+                };
+
+                var chargeService = new StripeChargeService();
+                var charge = chargeService.Create(chargeOptions);
+
+                return order.OrderId;
+            }
+            catch (StripeException e)
+            {
+                switch (e.StripeError.ErrorType)
+                {
+                    case "card_error":
+                        Console.WriteLine("Code: " + e.StripeError.Code);
+                        Console.WriteLine("Message: " + e.StripeError.Message);
+                        break;
+                    case "api_connection_error":
+                        break;
+                    case "api_error":
+                        break;
+                    case "authentication_error":
+                        break;
+                    case "invalid_request_error":
+                        break;
+                    case "rate_limit_error":
+                        break;
+                    case "validation_error":
+                        break;
+                    default:
+                        // Unknown Error Type
+                        break;
+                }
+            }
+
+            return -1;
         }
 
         [HttpGet("restaurant/{restaurantId}")]

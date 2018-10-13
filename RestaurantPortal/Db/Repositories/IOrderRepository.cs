@@ -10,5 +10,7 @@ namespace RestaurantPortal.Db.Repositories
         List<OrderDto> GetOrdersForCustomer(int customerId, OrderStatus status);
         List<OrderDto> GetOrdersForCustomer(int customerId);
         void ChangeOrderStatus(int orderId, OrderStatus status);
+        OrderDto GetOrder(int i);
+        void UpdateOrderAmount(int orderId, decimal amount);
     }
 }

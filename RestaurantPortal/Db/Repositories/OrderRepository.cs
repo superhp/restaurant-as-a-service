@@ -104,7 +104,43 @@ namespace RestaurantPortal.Db.Repositories
             if (order == null)
                 throw new ArgumentException($"No order with ID {orderId}");
 
-            order.OrderStatus = (OrderStatusEnum) Enum.Parse(typeof(OrderStatusEnum), ((int)status).ToString());
+            order.OrderStatus = (OrderStatusEnum)status;
+            _context.SaveChanges();
+        }
+
+        public OrderDto GetOrder(int id)
+        {
+            var order =
+                _context.Orders.Include(o => o.PurchasedMenuItems).ThenInclude(p => p.MenuItem)
+                    .Include(o => o.Restaurant)
+                    .Single(o => o.OrderId == id);
+
+            return new OrderDto
+            {
+                CustomerId = order.CustomerId,
+                Items = order.PurchasedMenuItems.Select(i => new MenuItemDto
+                {
+                    CategoryId = i.MenuItem.MenuItemCategoryId,
+                    Image = i.MenuItem.Image,
+                    MenuItemId = i.MenuItemId,
+                    Name = i.MenuItem.Name,
+                    Price = i.MenuItem.Price,
+                    Quantity = i.Quantity
+
+                }).ToList(),
+                OrderId = order.OrderId,
+                PaidPrice = order.PaidPrice,
+                RestaurantId = order.RestaurantId,
+                Status = (OrderStatus)order.OrderStatus,
+                Table = order.Table
+            };
+        }
+
+        public void UpdateOrderAmount(int orderId, decimal amount)
+        {
+            var order = _context.Orders.Find(orderId);
+
+            order.PaidPrice = amount;
             _context.SaveChanges();
         }
     }
