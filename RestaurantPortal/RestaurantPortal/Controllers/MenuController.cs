@@ -35,5 +35,11 @@ namespace RestaurantPortal.Controllers
 
             return menuItem;
         }
+
+        [HttpPost]
+        public void Save([FromBody] MenuItemDto menuItem)
+        {
+            _menuRepository.UpsertMenuItem(menuItem);
+        }
     }
 }
