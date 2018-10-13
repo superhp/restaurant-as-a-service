@@ -1,0 +1,19 @@
+Setup:
+> A table. Paper with QR code is attached to the table.
+> Arvydas at computer and clicking 'restaurant part'.
+> Jurgis with mobile phone. It MUST be mirrored on the big screen!
+The best option would be to have a split screen (half of the screen shows restaurant, half - my mobile phone).
+If that's not possible/does not fit - then it's tab switching with AltTab.
+
+Demo scenario:
+
+  1. Arvydas (restaurant manager) opens up menu tab. Adds the item "ketchup". Everything else is already hardcoded there.
+  2. Arvydas opens up branding tab. Changes the color.
+3. I arrive at the restaurant and sit at the table (scan the QR).
+4. I take a look at the menu. I choose 1 piece of "Leftover pizza" (2 euros) and 1 "Coca-Cola" (1 euro)
+5. Special offer from chef Tom pops up: ketchup only for half the price (0.5euro). I take it.
+6. I order and see the current status.
+  7. Arvydas sees the order appear at "New" He puts it to "Current", then "Done".
+8. The order is completed (Arvydas puts the pizza, coke and ketchup on the table where he stands. I come and pick it up).
+9. Mention that the payment is done 'behind the scenes' (user adds credit card to the app)
+
