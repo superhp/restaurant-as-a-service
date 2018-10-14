@@ -95,23 +95,23 @@ class BrandManagement extends Component {
     render() {
         return (
             <div className='brand-form container'>
-                <div className="col-md-12">
+				<div className="col-md-12 branding-inputs">
                     <div className="input-group col-md-4">
-                        <label>Logotype</label>
+						<div className='branding-fonts'><label>Logotype</label></div>
                         <input type="text" value={this.state.restaurant.logo} onChange={evt => this.updateLogo(evt)} className="form-control" name="logo" placeholder="Enter URL"/>
                     </div>
                 </div>
 
-                <div className="col-md-12">
+				<div className="col-md-12 branding-inputs">
                     <div className="input-group col-md-4">
-                        <label>Primary color</label>
+						<div className='branding-fonts'><label>Primary color</label></div>
                         <input type="text" value={this.state.restaurant.mainColor} onChange={evt => this.updateMainColor(evt)} className="form-control color-input" name="mainColor" placeholder="Color code with # (e.g. #000000)"/>
                         <ColorPicker color={this.state.restaurant.mainColor} onChange={this.colorPickerMain} placement="bottomLeft" />
                     </div>
                 </div>
-                <div className="col-md-12">
+				<div className="col-md-12 branding-inputs">
                     <div className="input-group col-md-4">
-                        <label>Secondary color</label>
+							<div className='branding-fonts'><label>Secondary color</label></div>
                         <input type="text" value={this.state.restaurant.secondaryColor} onChange={evt => this.updateSecondaryColor(evt)} className="form-control color-input" name="secondaryColor" placeholder="Color code with # (e.g. #000000)"/>
                         <ColorPicker color={this.state.restaurant.secondaryColor} onChange={this.colorPickerSecondary} placement="bottomLeft" />
                     </div>

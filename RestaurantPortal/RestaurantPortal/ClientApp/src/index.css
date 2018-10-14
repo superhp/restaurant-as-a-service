@@ -131,3 +131,12 @@
 	color: grey;
 	text-align: center;
 }
+
+.branding-fonts label {
+	font-size: 18px; 
+	margin-bottom: 10px; 
+}
+
+.branding-inputs {
+	margin-bottom: 30px;
+}
