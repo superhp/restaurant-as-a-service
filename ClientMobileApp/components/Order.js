@@ -1,7 +1,7 @@
 import React from 'react';
 import { Container, Body, Text, Spinner, Header, Card, ListItem, Content, Left, Thumbnail, Right, Button, CardItem, FooterTab } from 'native-base';
 import { api } from './Helper';
-import { StyleSheet, FlatList } from 'react-native';
+import { StatusBar, StyleSheet, FlatList } from 'react-native';
 import OrderTotal from './OrderTotal';
 import Modal from "react-native-modal";
 
@@ -19,6 +19,10 @@ export default class Order extends React.Component {
             categories: [],
             restaurant: {}
         };
+    }
+
+    componentDidMount() {
+        StatusBar.setHidden(true);
     }
 
     async componentWillMount() {
