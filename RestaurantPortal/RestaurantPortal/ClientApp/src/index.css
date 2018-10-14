@@ -120,3 +120,14 @@
 		-moz-transform: rotate(6deg);
 		-o-transform: rotate(6deg);
 	}
+
+.logo {
+	position: absolute;
+    bottom: 20px;
+    left: 5%;
+}
+
+.copyrights {
+	color: grey;
+	text-align: center;
+}

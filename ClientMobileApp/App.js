@@ -5,6 +5,7 @@ import Home from './components/Home';
 import Order from './components/Order';
 import QRScanner from './components/QRScanner';
 import OrderStatus from './components/OrderStatus';
+import Settings from './components/Settings';
 
 const QRStack = createStackNavigator(
     {
@@ -21,7 +22,8 @@ const QRStack = createStackNavigator(
 
 export default createBottomTabNavigator({
     Home: Home,
-    QRScanner: QRStack
+    QRScanner: QRStack,
+    Settings: Settings
 },
 {
     navigationOptions: ({ navigation }) => ({
@@ -32,6 +34,8 @@ export default createBottomTabNavigator({
                 iconName = `ios-home${focused ? '' : '-outline'}`;
             } else if (routeName === 'QRScanner') {
                 iconName = `ios-qr-scanner${focused ? '' : '-outline'}`;
+            } else if (routeName === 'Settings') {
+                iconName = `ios-settings${focused ? '' : '-outline'}`;
             }
 
             // You can return any component that you like here! We usually use an
@@ -42,9 +46,7 @@ export default createBottomTabNavigator({
     tabBarOptions: {
         activeTintColor: '#ff6600',
         inactiveTintColor: '#7992c5',
-        labelStyle: {
-            fontSize: 14,
-        },
+        showLabel: false,
         style: {
             backgroundColor: '#041f30',
         },

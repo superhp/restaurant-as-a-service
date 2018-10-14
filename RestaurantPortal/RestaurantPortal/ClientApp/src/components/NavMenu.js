@@ -31,5 +31,13 @@ export default props => (
         </LinkContainer>   
       </Nav>
     </Navbar.Collapse>
+
+    <div className="logo">
+      <img src="https://i.imgur.com/OxdE30p.png" width="270" />
+      <div className="copyrights">
+        © Waiterless 2018
+      </div>
+    </div>
+      
   </Navbar>
 );
