@@ -38,6 +38,7 @@ export default class OrderTotal extends React.Component {
     }
 
     handleDone = () => {
+        clearInterval(this.state.intervalId);
         this.setState({
             intervalId: 0,
             orderId: 0,
@@ -62,7 +63,7 @@ export default class OrderTotal extends React.Component {
                                 : <Text style={styles.primaryText}>Complete</Text>
                     }
                     {
-                        this.state.status === 2 ? <Button onPress={() => this.handleDone()}><Text>OK</Text></Button> : null
+                        this.state.status === 2 ? <Button block onPress={() => this.handleDone()}><Text>OK</Text></Button> : null
                     }
                 </Content>
             </Container>
