@@ -37,6 +37,13 @@ class MenuCreator extends Component {
 			item.price = e.target.value;
 		}
 		this.setState({ items: this.state.items }); 
+		fetch('api/menu/save', {
+			method: 'POST', body: JSON.stringify(item), headers: { "Content-Type": "application/json; charset=utf-8" }
+		})
+			.then(resp => resp.json())
+			.then((resp) => {
+				console.log(resp);
+			}); 
 	}
 
 	switchEditMode = menuItemId => {
@@ -45,7 +52,7 @@ class MenuCreator extends Component {
 			editMode: !this.state.editMode
 		}); 
 	}
-
+	
 	createNewItem = () => {
 		let item = {
 			categoryId: this.state.newItemType,
