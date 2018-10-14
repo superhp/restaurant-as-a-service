@@ -15,26 +15,26 @@ export default class OrderTotal extends React.Component {
         }
     }
 
-    componentWillMount() {
+    componentDidMount() {
         const { navigation } = this.props;
         let orderID = navigation.getParam('orderId', 'NO-ID');
         let restaurantId = navigation.getParam('restaurantId', 'NO-ID');
 
-        this.setState({ orderId: orderID, restaurantId: restaurantId });
-    }
+        console.log(orderID + ' ' + restaurantId);
 
-    componentDidMount() {
-        this.setState({ intervalId: setInterval(this.continuousFetch, 3000) });
+        this._interval = setInterval(this.continuousFetch, 3000);
+        this.setState({ orderId: orderID, restaurantId: restaurantId});
     }
     componentWillUnmount() {
-        clearInterval(this.state.intervalId);
+        clearInterval(this._interval);
     }
 
     continuousFetch = () => {
-        console.log(this.state.orderId)
+        console.log('fetch')
         fetch(api + 'order/' + this.state.orderId)
             .then(res => res.json())
-            .then(data => { console.log(data); this.setState({ status: data.status }) })
+            .then(data => { this.setState({ status: data.status }); console.log('fetch done') })
+            .catch()
     }
 
     handleDone = () => {
@@ -45,8 +45,9 @@ export default class OrderTotal extends React.Component {
             status: 0,
             restaurantId: 0
         })
-        this.props.navigation.navigate('QRScanner');
-        this.props.navigation.navigate('Home');
+        // this.props.navigation.navigate('QRScanner');
+        // this.props.navigation.navigate('Home');
+        console.log('nope')
     }
 
     render() {
@@ -62,9 +63,9 @@ export default class OrderTotal extends React.Component {
                                 ? <Text style={styles.primaryText}>In progress</Text>
                                 : <Text style={styles.primaryText}>Complete</Text>
                     }
-                    {
+                    {/* {
                         this.state.status === 2 ? <Button block onPress={() => this.handleDone()}><Text>OK</Text></Button> : null
-                    }
+                    } */}
                 </Content>
             </Container>
         );
