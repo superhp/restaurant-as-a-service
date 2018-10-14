@@ -47,6 +47,7 @@
     .navbar li a {
         padding: 10px 16px;
         border-radius: 4px;
+		font-size: 23px;
     }
     .navbar a {
         /* If a menu item's text is too long, truncate it */
