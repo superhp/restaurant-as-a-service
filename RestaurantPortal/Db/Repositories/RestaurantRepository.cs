@@ -1,4 +1,6 @@
 ﻿using System;
+using System.Collections.Generic;
+using System.Linq;
 using RestaurantPortal.Models;
 
 namespace RestaurantPortal.Db.Repositories
@@ -41,6 +43,18 @@ namespace RestaurantPortal.Db.Repositories
                 SecondaryColor = restaurant.SecondaryColor,
                 Name = restaurant.Name
             };
+        }
+
+        public IEnumerable<RestaurantDto> GetAll()
+        {
+            return _dbContext.Restaurants.Select(restaurant => new RestaurantDto
+            {
+                Id = restaurant.RestaurantId,
+                Logo = restaurant.Logo,
+                MainColor = restaurant.MainColor,
+                SecondaryColor = restaurant.SecondaryColor,
+                Name = restaurant.Name
+            });
         }
     }
 }

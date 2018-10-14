@@ -167,11 +167,14 @@ export default class Order extends React.Component {
         return (
             <Container>
                 <Header style={{backgroundColor: this.state.restaurant.mainColor}}>
+                    <Body>
+                        <Text style={{fontSize: 18, color: this.state.restaurant.secondaryColor}}>{this.state.restaurant.name}</Text>
+                    </Body>
                     <Right>
                         <Thumbnail large source={{ uri: this.state.restaurant.logo }} />
                     </Right>
                     <Body>
-                        <Text style={{fontSize: 18, color: this.state.restaurant.secondaryColor}}>{this.state.restaurant.name}</Text>
+                        <Text style={{fontSize: 18, color: this.state.restaurant.secondaryColor}}>Table #{this.state.tableId.toString()}</Text>
                     </Body>
                 </Header>
                 <Content>
@@ -211,11 +214,11 @@ export default class Order extends React.Component {
                             <Text style={{fontSize: 18, color: this.state.restaurant.secondaryColor}}>{total}</Text>
                         </Right>
                         <Right style={styles.marginZero}>
-                            <Button transparent onPress={this.triggerShowAddons}><Text style={{fontSize: 18, color: this.state.restaurant.secondaryColor}}>View</Text></Button>
+                            <Button transparent onPress={this.triggerShowAddons}><Text style={{fontSize: 18, color: this.state.restaurant.secondaryColor}}>Proceed</Text></Button>
                         </Right>
                     </FooterTab>
                 </OrderTotal>
-                <Modal isVisible={this.state.showAddon} onModalHide={this.triggerShowOrder}>
+                <Modal isVisible={this.state.showAddon} onModalHide={this.triggerShowOrder} onBackdropPress={() => this.setState({ showAddon: false })}>
                     <Card>
                         <CardItem header bordered>
                             <Left>
@@ -244,7 +247,7 @@ export default class Order extends React.Component {
                         </Button>
                     </Card>
                 </Modal>
-                <Modal isVisible={this.state.showOrder}>
+                <Modal isVisible={this.state.showOrder} onBackdropPress={() => this.setState({ showOrder: false })}>
                     <Card>
                         <CardItem header bordered>
                             <Left>
@@ -252,9 +255,6 @@ export default class Order extends React.Component {
                             </Left>
                             <Right>
                                 <Text style={{fontSize: 18, color: this.state.restaurant.secondaryColor}}>{total}</Text>
-                            </Right>
-                            <Right style={styles.marginZero}>
-                                <Button transparent onPress={this.triggerShowOrder}><Text style={{fontSize: 18, color: this.state.restaurant.secondaryColor}}>Hide</Text></Button>
                             </Right>
                         </CardItem>
                         <FlatList data={this.state.menu.filter(m => m.quantity !== 0)} extraData={this.state} renderItem={({ item }) => (

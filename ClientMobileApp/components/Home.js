@@ -1,14 +1,18 @@
 import React, { Component } from 'react';
-import { Container, Header, Left, Right, Button, Body, Title, Card, CardItem, Content } from 'native-base';
+import { Container, Header, Left, Right, Button, Body, Title, Card, ListItem, Content } from 'native-base';
 import Carousel from 'react-native-carousel';
 import Expo from "expo";
-import { StatusBar, StyleSheet, View, Image, Text } from 'react-native';
+import { StatusBar, StyleSheet, View, Image, Text, FlatList } from 'react-native';
+import { api } from './Helper';
 
 export default class Home extends Component {
 
     constructor(props) {
         super(props);
-        this.state = { loading: true };
+        this.state = { 
+            loading: true,
+            restaurants: []
+        };
     }
     async componentWillMount() {
         await Expo.Font.loadAsync({
@@ -16,7 +20,10 @@ export default class Home extends Component {
             Roboto_medium: require("native-base/Fonts/Roboto_medium.ttf"),
             Ionicons: require("@expo/vector-icons/fonts/Ionicons.ttf"),
         });
-        this.setState({ loading: false });
+
+        // fetch(api + 'restaurant')
+
+        this.setState({ loading: false });        
     }
 
     componentDidMount() {
@@ -27,23 +34,34 @@ export default class Home extends Component {
         return this.state.loading ? null : (
             <Container style={styles.container}>
                 <Header style={{ backgroundColor: 'white' }}>
-                    <Body style={{ alignItems: 'center' }}>
-                        <Image style={{ width: '50%', height: '50%' }} source={require('../assets/waiterless-small.png')} />
+                    <Body style={{ alignItems: 'center', justifyContent: 'center'}}>
+                        <Image style={{ width: '60%', height: '60%' }} source={require('../assets/waiterless-small.png')} />
                     </Body>
                 </Header>
 
                 <Carousel style={{ alignItems: 'center', boxShadow: '10px 10px 5px grey' }}
                     indicatorAtBottom={false}
-                    indicatorOffset={250}
+                    indicatorOffset={230}
                     delay={10000}>
                     <View style={styles.page}>
-                        <Image style={{width: 375, height: '60%'}} source={{uri: 'https://i.ytimg.com/vi/0m73kD6Se1E/maxresdefault.jpg'}} />                        
-                    </View>                                
+                        <Image style={{ width: 375, height: '60%' }} source={{ uri: 'https://i.ytimg.com/vi/0m73kD6Se1E/maxresdefault.jpg' }} />
+                    </View>
                     <View style={styles.page}>
-                        <Image style={{width: 375, height: '60%'}} source={{uri: 'http://www.cili.lt/wp-content/uploads/2018/04/1-44545.jpg'}} />
+                        <Image style={{ width: 375, height: '60%' }} source={{ uri: 'http://www.cili.lt/wp-content/uploads/2018/04/1-44545.jpg' }} />
                     </View>
                 </Carousel>
                 <Content>
+                    <FlatList data={this.state.restaurants} extraData={this.state} renderItem={({ item }) => (
+                        <ListItem thumbnail>
+                            <Left>
+                                <Thumbnail square large source={{ uri: item.logo }} />
+                            </Left>
+                            <Body>
+                                <Text style={{ fontSize: 24 }}>{item.name}</Text>
+                            </Body>
+                        </ListItem>
+                    )} keyExtractor={item => item.name + item.id}>
+                    </FlatList>
                 </Content>
             </Container>
         );
@@ -56,8 +74,5 @@ const styles = StyleSheet.create({
         justifyContent: 'center',
         alignItems: 'center',
         backgroundColor: 'transparent',
-    },
-    headerText: {
-        color: '#ff6600'
     }
 });

@@ -37,6 +37,13 @@ class MenuCreator extends Component {
 			item.price = e.target.value;
 		}
 		this.setState({ items: this.state.items }); 
+		fetch('api/menu/save', {
+			method: 'POST', body: JSON.stringify(item), headers: { "Content-Type": "application/json; charset=utf-8" }
+		})
+			.then(resp => resp.json())
+			.then((resp) => {
+				console.log(resp);
+			}); 
 	}
 
 	switchEditMode = menuItemId => {
@@ -45,7 +52,7 @@ class MenuCreator extends Component {
 			editMode: !this.state.editMode
 		}); 
 	}
-
+	
 	createNewItem = () => {
 		let item = {
 			categoryId: this.state.newItemType,
@@ -75,11 +82,11 @@ class MenuCreator extends Component {
 				<div className='ui card' style={{ margin: '1em 0' }}>
 					<img src={item.image} className='ui image' />
 					<div className='content'>
-						<div className='header'>{this.state.editMode && this.state.editMenuItemId === item.menuItemId ? <input type='text' value={item.name} onChange={(e) => this.editItem('name', e)} /> : item.name}</div>
-						<div className='description'>{this.state.editMode && this.state.editMenuItemId === item.menuItemId ? <input type='text' value={item.price} onChange={(e) => this.editItem('price', e)} /> : <p>Price: {item.price} €</p>}</div>
+						<div className='header' style={{ fontSize: '21px' }}>{this.state.editMode && this.state.editMenuItemId === item.menuItemId ? <input type='text' value={item.name} onChange={(e) => this.editItem('name', e)} /> : item.name}</div>
+						<div className='description' style={{ fontSize: '16px' }}> { this.state.editMode && this.state.editMenuItemId === item.menuItemId ? <input type='text' value={item.price} onChange={(e) => this.editItem('price', e)} /> : <p>Price: {item.price} €</p> }</div>
 					</div>
 					<div className='extra content' style={{ display: 'flex' }}>
-						<div style={{ fontWeight: 'bold' }}>{item.categoryId === 1 ? 'Food' : (item.categoryId === 2 ? 'Drink' : 'Extra')}</div>
+						<div style={{ fontWeight: 'bold', fontSize: '18px', marginTop: '7px' }}>{item.categoryId === 1 ? 'Food' : (item.categoryId === 2 ? 'Drinks' : 'Extras')}</div>
 						<div style={{ marginLeft: 'auto' }}><button className='ui button' role='button' onClick={() => this.switchEditMode(item.menuItemId)}>{this.state.editMode && this.state.editMenuItemId === item.menuItemId ? 'Save' : 'Edit'}</button></div>
 					</div>
 				</div>  

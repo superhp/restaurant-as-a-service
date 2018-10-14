@@ -1,4 +1,5 @@
-﻿using RestaurantPortal.Models;
+﻿using System.Collections.Generic;
+using RestaurantPortal.Models;
 
 namespace RestaurantPortal.Db.Repositories
 {
@@ -6,5 +7,6 @@ namespace RestaurantPortal.Db.Repositories
     {
         void Update(RestaurantDto restaurantDto);
         RestaurantDto Get(int id);
+        IEnumerable<RestaurantDto> GetAll();
     }
 }

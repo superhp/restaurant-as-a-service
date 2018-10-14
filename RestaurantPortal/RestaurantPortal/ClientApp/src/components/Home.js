@@ -31,10 +31,9 @@ const getItemStyle = (isDragging, draggableStyle) => {
 		userSelect: 'none',
 		padding: grid * 2,
 		marginBottom: '20px',
-		fontSize: '5px',
 		// change background colour if dragging
-		background: isDragging ? 'rgb(244, 249, 30)' : 'rgb(254, 255, 211)',
-
+		background: isDragging ? 'rgba(254, 255, 211, 0.7)' : 'rgb(254, 255, 211)',
+		fontSize: '18px', 
 		borderRadius: 5, 
 
 		// styles we need to apply on draggables
@@ -47,10 +46,10 @@ const getItemStyle = (isDragging, draggableStyle) => {
 };
 
 const getListStyle = isDraggingOver => ({
-	background: isDraggingOver ? '#FFDC37' : 'rgba(228, 0, 0, 0.6)',
+	background: isDraggingOver ? 'rgb(255, 220, 55)' : '#ffffff',
 	padding: grid,
 	width: 350,
-	minHeight: 54
+	minHeight: 900
 });
 
 class Home extends Component {	
