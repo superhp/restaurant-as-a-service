@@ -15,6 +15,7 @@ export default class Order extends React.Component {
             count: 0,
             menu: [],
             showOrder: false,
+            showAddon: false,
             categories: [],
             restaurant: {}
         };
@@ -73,8 +74,31 @@ export default class Order extends React.Component {
 
     triggerShowOrder = () => {
         let boo = !this.state.showOrder;
-        this.setState({ showOrder: boo })
+        this.setState({ showOrder: boo });
     }
+
+    triggerShowAddons = () => {
+        this.setState({
+            showAddon: true,
+            showOrder: false
+        })
+    }
+
+    onNoPressed = () => {
+        this.setState({
+            showAddon: false
+        });
+        //this.triggerShowOrder();
+    }
+
+    onYesPressed = () => {
+        this.addItem(15, 1);
+        this.setState({
+            showAddon: false
+        });
+        //this.triggerShowOrder();
+    }
+
 
     onOrderNowPressed = () => {
         // {
@@ -130,6 +154,16 @@ export default class Order extends React.Component {
                 </Container>
             );
         }
+
+        let ketchup = this.state.menu.find(m => m.menuItemId == 15);
+        if (ketchup === undefined) {
+            ketchup = {
+                image: "",
+                name: "",
+                price: 0.0
+            }
+        }
+
         return (
             <Container>
                 <Header style={{backgroundColor: this.state.restaurant.mainColor}}>
@@ -177,10 +211,39 @@ export default class Order extends React.Component {
                             <Text style={{fontSize: 18, color: this.state.restaurant.secondaryColor}}>{total}</Text>
                         </Right>
                         <Right style={styles.marginZero}>
-                            <Button transparent onPress={() => this.triggerShowOrder()}><Text style={{fontSize: 18, color: this.state.restaurant.secondaryColor}}>View</Text></Button>
+                            <Button transparent onPress={this.triggerShowAddons}><Text style={{fontSize: 18, color: this.state.restaurant.secondaryColor}}>View</Text></Button>
                         </Right>
                     </FooterTab>
                 </OrderTotal>
+                <Modal isVisible={this.state.showAddon} onModalHide={this.triggerShowOrder}>
+                    <Card>
+                        <CardItem header bordered>
+                            <Left>
+                                <Text style={{fontSize: 22, color: this.state.restaurant.secondaryColor}}>You may also like</Text>
+                            </Left>
+                        </CardItem>
+
+                        <CardItem>
+                            <Left>
+                                <Thumbnail square large source={{ uri: ketchup.image }} />
+                            </Left>
+                            <Body>
+                                <Text style={{fontSize: 18}}>{ketchup.name}</Text>
+                                <Text note numberOfLines={1} style={{fontSize: 18}}> </Text>
+                                <Text note style={{fontSize: 18}} numberOfLines={1}>{ketchup.price}</Text>
+                            </Body>
+                        </CardItem>
+                 
+                        <Button block style={{ backgroundColor: this.state.restaurant.mainColor, marginTop: 10, marginLeft: 5, marginRight: 5, marginBottom: 3 }}
+                            onPress={this.onNoPressed}>
+                            <Text style={{fontSize: 18, color: this.state.restaurant.secondaryColor}}>No, thanks</Text>
+                        </Button>
+                        <Button block style={{ backgroundColor: this.state.restaurant.mainColor, marginTop: 10, marginLeft: 5, marginRight: 5, marginBottom: 3 }}
+                            onPress={this.onYesPressed}>
+                            <Text style={{fontSize: 18, color: this.state.restaurant.secondaryColor}}>Yes, please</Text>
+                        </Button>
+                    </Card>
+                </Modal>
                 <Modal isVisible={this.state.showOrder}>
                     <Card>
                         <CardItem header bordered>
