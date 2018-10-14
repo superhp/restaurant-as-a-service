@@ -79,7 +79,7 @@ class MenuCreator extends Component {
 						<div className='description'>{this.state.editMode && this.state.editMenuItemId === item.menuItemId ? <input type='text' value={item.price} onChange={(e) => this.editItem('price', e)} /> : <p>Price: {item.price} €</p>}</div>
 					</div>
 					<div className='extra content' style={{ display: 'flex' }}>
-						<div style={{ fontWeight: 'bold' }}>{item.categoryId === 1 ? 'Food' : 'Drink'}</div>
+						<div style={{ fontWeight: 'bold' }}>{item.categoryId === 1 ? 'Food' : (item.categoryId === 2 ? 'Drink' : 'Extra')}</div>
 						<div style={{ marginLeft: 'auto' }}><button className='ui button' role='button' onClick={() => this.switchEditMode(item.menuItemId)}>{this.state.editMode && this.state.editMenuItemId === item.menuItemId ? 'Save' : 'Edit'}</button></div>
 					</div>
 				</div>  
