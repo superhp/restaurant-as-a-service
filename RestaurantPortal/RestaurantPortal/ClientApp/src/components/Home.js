@@ -33,7 +33,7 @@ const getItemStyle = (isDragging, draggableStyle) => {
 		marginBottom: '20px',
 		// change background colour if dragging
 		background: isDragging ? 'rgba(254, 255, 211, 0.7)' : 'rgb(254, 255, 211)',
-
+		fontSize: '18px', 
 		borderRadius: 5, 
 
 		// styles we need to apply on draggables
