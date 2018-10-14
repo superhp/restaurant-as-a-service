@@ -7,7 +7,7 @@ If that's not possible/does not fit - then it's tab switching with AltTab.
 
 Demo scenario:
 
-  1. Arvydas (restaurant manager) opens up menu tab. Adds the item "ketchup". Everything else is already hardcoded there.
+  1. Arvydas (restaurant) opens up menu tab. Adds the item "ketchup". Everything else is already hardcoded there.
   2. Arvydas opens up branding tab. Changes the color.
 3. I arrive at the restaurant and sit at the table (scan the QR).
 4. I take a look at the menu. I choose 1 piece of "Leftover pizza" (2 euros) and 1 "Coca-Cola" (1 euro)
