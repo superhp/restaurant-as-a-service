@@ -16,17 +16,17 @@ export default props => (
       <Nav>
         <LinkContainer to={'/manage-orders'} exact>
           <NavItem>
-            <Glyphicon glyph='home' /> Orders Management
+            <Glyphicon glyph='home' /> Orders
           </NavItem>
 		</LinkContainer>  
 		<LinkContainer to={'/manage-menu'} exact>
 			<NavItem>
-				<Glyphicon glyph='book' /> Menu Management
+				<Glyphicon glyph='book' /> Menu
 			</NavItem>
 		</LinkContainer>   
         <LinkContainer to={'/brand'} exact>
           <NavItem>
-            <Glyphicon glyph='cutlery' /> Brand Management
+            <Glyphicon glyph='cutlery' /> Branding
           </NavItem>
         </LinkContainer>   
       </Nav>

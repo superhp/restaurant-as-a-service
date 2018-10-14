@@ -91,7 +91,6 @@
 
 	.notes li p {
 		text-align: left;
-		font: normal normal normal 26px/28px 'Reenie Beanie', Helvetica, Arial, sans-serif;
 		color: #000;
 		text-shadow: white 1px 1px 0px;
 		overflow: hidden;
@@ -106,8 +105,8 @@
 		width: 75px;
 		height: 25px;
 		z-index: 2;
-		background-color: rgba(243,245,228,0.5);
-		border: 2px solid rgba(255,255,255,0.5);
+		background-color: rgba(243,245,228,0.7);
+		border: 2px solid rgba(255,255,255,0.7);
 		-webkit-box-shadow: 0 0 5px #888;
 		-moz-box-shadow: 0 0 5px #888;
 		box-shadow: 2px 2px 2px #000;
