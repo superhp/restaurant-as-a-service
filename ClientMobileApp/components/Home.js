@@ -1,8 +1,8 @@
 import React, { Component } from 'react';
-import { Container, Header, Left, Right, Button, Body, Title, Text, Content } from 'native-base';
+import { Container, Header, Left, Right, Button, Body, Title, Card, CardItem, Content } from 'native-base';
 import Carousel from 'react-native-carousel';
 import Expo from "expo";
-import { StatusBar, StyleSheet, View } from 'react-native';
+import { StatusBar, StyleSheet, View, Image, Text } from 'react-native';
 
 export default class Home extends Component {
 
@@ -26,18 +26,24 @@ export default class Home extends Component {
     render() {
         return this.state.loading ? null : (
             <Container style={styles.container}>
+                <Header style={{ backgroundColor: 'white' }}>
+                    <Body style={{ alignItems: 'center' }}>
+                        <Image style={{ width: '50%', height: '50%' }} source={require('../assets/waiterless-small.png')} />
+                    </Body>
+                </Header>
+
+                <Carousel style={{ alignItems: 'center', boxShadow: '10px 10px 5px grey' }}
+                    indicatorAtBottom={false}
+                    indicatorOffset={250}
+                    delay={10000}>
+                    <View style={styles.page}>
+                        <Image style={{width: 375, height: '60%'}} source={{uri: 'https://i.ytimg.com/vi/0m73kD6Se1E/maxresdefault.jpg'}} />                        
+                    </View>                                
+                    <View style={styles.page}>
+                        <Image style={{width: 375, height: '60%'}} source={{uri: 'http://www.cili.lt/wp-content/uploads/2018/04/1-44545.jpg'}} />
+                    </View>
+                </Carousel>
                 <Content>
-                    <Carousel>
-                        <View>
-                            <Text>Page 1</Text>
-                        </View>
-                        <View>
-                            <Text>Page 2</Text>
-                        </View>
-                        <View>
-                            <Text>Page 3</Text>
-                        </View>
-                    </Carousel>
                 </Content>
             </Container>
         );
@@ -45,8 +51,11 @@ export default class Home extends Component {
 }
 
 const styles = StyleSheet.create({
-    container: {
-        backgroundColor: '#002b47'
+    page: {
+        flex: 1,
+        justifyContent: 'center',
+        alignItems: 'center',
+        backgroundColor: 'transparent',
     },
     headerText: {
         color: '#ff6600'
