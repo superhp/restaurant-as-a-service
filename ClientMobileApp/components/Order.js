@@ -167,11 +167,14 @@ export default class Order extends React.Component {
         return (
             <Container>
                 <Header style={{backgroundColor: this.state.restaurant.mainColor}}>
+                    <Body>
+                        <Text style={{fontSize: 18, color: this.state.restaurant.secondaryColor}}>{this.state.restaurant.name}</Text>
+                    </Body>
                     <Right>
                         <Thumbnail large source={{ uri: this.state.restaurant.logo }} />
                     </Right>
                     <Body>
-                        <Text style={{fontSize: 18, color: this.state.restaurant.secondaryColor}}>{this.state.restaurant.name}</Text>
+                        <Text style={{fontSize: 18, color: this.state.restaurant.secondaryColor}}>Table #{this.state.tableId.toString()}</Text>
                     </Body>
                 </Header>
                 <Content>
