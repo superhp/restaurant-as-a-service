@@ -20,6 +20,14 @@ namespace RestaurantPortal.Controllers
             _restaurantRepository = restaurantRepository;
         }
 
+        [HttpGet]
+        public IEnumerable<RestaurantDto> Get()
+        {
+            var restaurants = _restaurantRepository.GetAll();
+
+            return restaurants;
+        }
+
         [HttpGet("{id}")]
         public RestaurantDto Get(int id)
         {
