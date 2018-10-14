@@ -30,10 +30,10 @@ const getItemStyle = (isDragging, draggableStyle) => {
 		// some basic styles to make the items look a bit nicer
 		userSelect: 'none',
 		padding: grid * 2,
-		margin: `0 0 ${grid}px 0`,
-
+		marginBottom: '20px',
+		fontSize: '5px',
 		// change background colour if dragging
-		background: isDragging ? '#FFE983' : 'white',
+		background: isDragging ? 'rgb(244, 249, 30)' : 'rgb(254, 255, 211)',
 
 		borderRadius: 5, 
 
@@ -47,7 +47,7 @@ const getItemStyle = (isDragging, draggableStyle) => {
 };
 
 const getListStyle = isDraggingOver => ({
-	background: isDraggingOver ? '#FFDC37' : 'lightgrey',
+	background: isDraggingOver ? '#FFDC37' : 'rgba(228, 0, 0, 0.6)',
 	padding: grid,
 	width: 350,
 	minHeight: 54
@@ -132,26 +132,17 @@ class Home extends Component {
 				<div className="Orders">
 					<div className="OrdersColumn">
 						<div>
-							<h2>New Orders</h2>
-						</div>
-						<div>
-							{droppable(this.state.newOrders, "droppable")} 
+							{droppable(this.state.newOrders, "droppable", "New Orders")} 
 						</div>
 					</div>
 					<div className="OrdersColumn">
 						<div>
-							<h2>Processing Orders</h2>
-						</div>
-						<div>
-							{droppable(this.state.processingOrders, "droppable2")}
+							{droppable(this.state.processingOrders, "droppable2", "Processing Orders")}
 						</div>
 					</div>
 					<div className="OrdersColumn">
 						<div>
-							<h2>Finished Orders</h2>
-						</div>
-						<div>
-							{droppable(this.state.finishedOrders, "droppable3")}
+							{droppable(this.state.finishedOrders, "droppable3", "Finished Orders")}
 						</div>
 					</div>
 				</div>
@@ -162,7 +153,7 @@ class Home extends Component {
 
 const orderCard = order => (
 	<div>
-		<div style={{ borderBottom: '1px solid black', marginBottom: '12px'}}>
+		<div style={{ display: 'flex', borderBottom: '1px solid black', marginBottom: '12px' }}>
 			<p><b>Table: {order.table}</b></p>
 		</div>
 		{order.items.map(item => orderItemCard(item))}
@@ -175,19 +166,22 @@ const orderItemCard = item => (
 	</div>
 )
 
-const droppable = (orders, droppableid) => (
+const droppable = (orders, droppableid, title) => (
 	<Droppable droppableId={droppableid}>
 		{(provided, snapshot) => (
-			<div
+			<ul className='notes'
 				ref={provided.innerRef}
 				style={getListStyle(snapshot.isDraggingOver)}>
+				<div className='notes-header'>
+					<p>{title}</p>
+				</div>
 				{orders.map((order, index) => (
 					<Draggable
 						key={order.orderId}
 						draggableId={order.orderId}
-						index={index}>
+						index={index}>						
 						{(provided, snapshot) => (
-							<div
+							<li
 								ref={provided.innerRef}
 								{...provided.draggableProps}
 								{...provided.dragHandleProps}
@@ -196,12 +190,12 @@ const droppable = (orders, droppableid) => (
 									provided.draggableProps.style
 								)}>
 								{orderCard(order)}
-							</div>
+							</li>
 						)}
 					</Draggable>
 				))}
 				{provided.placeholder}
-			</div>
+			</ul>
 		)}
 	</Droppable>
 );
