@@ -1,9 +1,10 @@
-import React from 'react';
+import React, { Component } from 'react';
 import { Container, Body, Text, Spinner, Header, Card, ListItem, Content, Left, Thumbnail, Right, Button, CardItem, FooterTab } from 'native-base';
 import { api } from './Helper';
 import { StatusBar, StyleSheet, FlatList } from 'react-native';
 import OrderTotal from './OrderTotal';
 import Modal from "react-native-modal";
+import { OptimizedFlatList } from 'react-native-optimized-flatlist';
 
 export default class Order extends React.Component {
     constructor(props) {
@@ -14,8 +15,9 @@ export default class Order extends React.Component {
             tableId: 0,
             count: 0,
             menu: [],
+            cart: [], 
             showOrder: false,
-            showAddon: false,
+            showAddon: false, 
             categories: [],
             restaurant: {}
         };
@@ -48,32 +50,25 @@ export default class Order extends React.Component {
                 .then(data => this.setState({ categories: data }))
             fetch(api + 'menu/' + this.state.restaurantId)
                 .then(res => res.json())
-                .then(data => this.setState({ menu: data }));
+                .then(data => {                    
+                    let cart = {};
+                    data.map(x => cart[x.menuItemId] = 0); 
+                    this.setState({ menu: data, cart: cart }); 
+                });
         });
 
         this.setState({ loading: false });
     }
 
-    addItem(id, quantity) {
-        let items = this.state.menu;
-        if (items.find(i => i.menuItemId === id)) {
-            let item = items.find(i => i.menuItemId === id);
-            item.quantity += quantity;
-            //items[items.indexOf(x => x.menuItemId === id)] = item;
-        }
-        this.setState({ menu: items })
+    addItem = (id) => {
+        this.state.menu.find(i => i.menuItemId === id).quantity++;
+        this.setState({ menu: this.state.menu });
     }
 
-    removeItem(id, quantity) {
-        let items = this.state.menu;
-        if (items.find(i => i.menuItemId === id)) {
-            let item = items.find(i => i.menuItemId === id);
-            if (item.quantity > 0) {
-                item.quantity -= quantity;
-            }
-            //items[items.indexOf(x => x.menuItemId === id)] = item;
-        }
-        this.setState({ menu: items })
+    removeItem = (id) => {
+        let item = this.state.menu.find(i => i.menuItemId === id);
+        item.quantity = item.quantity > 1 ? --item.quantity : 0; 
+        this.setState({ menu: this.state.menu });
     }
 
     triggerShowOrder = () => {
@@ -144,6 +139,12 @@ export default class Order extends React.Component {
             })
     }
 
+    getCount = (menuItemId) => this.state.menu.find(i => i.menuItemId === menuItemId).quantity; 
+
+    renderItem = ({item}) => (
+        <MyListItem item={item} getCount={this.getCount} addItem={this.addItem} removeItem={this.removeItem} restaurant={this.state.restaurant} />
+    )
+
     render() {
         let total = Math.round(this.state.menu.reduce(function (prev, cur) {
             return prev + cur.price * cur.quantity;
@@ -182,32 +183,7 @@ export default class Order extends React.Component {
                     </Body>
                 </Header>
                 <Content>
-                    <FlatList data={this.state.menu} extraData={this.state} renderItem={({ item }) => (
-                        <ListItem thumbnail>
-                            <Left>
-                                <Thumbnail square large source={{ uri: item.image }} />
-                            </Left>
-                            <Body>
-                                <Text style={{fontSize: 18}}>{item.name}</Text>
-                                <Text note numberOfLines={1} style={{fontSize: 18}}> </Text>
-                                <Text note style={{fontSize: 18}} numberOfLines={1}>{item.price}</Text>
-                            </Body>
-                            <Right>
-                                <Button style={{backgroundColor: this.state.restaurant.mainColor}} onPress={() => this.removeItem(item.menuItemId, 1)}>
-                                    <Text style={{ color: this.state.restaurant.secondaryColor, fontSize: 24 }}>-</Text>
-                                </Button>
-                            </Right>
-                            <Right>
-                                <Text style={{fontSize: 18}}>{item.quantity}</Text>
-                            </Right>
-                            <Right>
-                                <Button style={{backgroundColor: this.state.restaurant.mainColor}} onPress={() => this.addItem(item.menuItemId, 1)}>
-                                    <Text style={{ color: this.state.restaurant.secondaryColor, fontSize: 24 }}>+</Text>
-                                </Button>
-                            </Right>
-                        </ListItem>
-                    )} keyExtractor={item => item.name + item.menuItemId}>
-                    </FlatList>
+                    <FlatList data={this.state.menu} renderItem={this.renderItem} keyExtractor={item => item.name + item.menuItemId} />
                 </Content>
                 <OrderTotal hide={footerHidden || this.state.showOrder} style={{backgroundColor: this.state.restaurant.mainColor}}>
                     <FooterTab style={{backgroundColor: this.state.restaurant.mainColor}}>
@@ -310,3 +286,34 @@ const styles = StyleSheet.create({
         color: 'black'
     }
 });
+
+class MyListItem extends Component {
+    render() {
+        let item = this.props.item; 
+        return (
+            <ListItem thumbnail>
+                <Left>
+                    <Thumbnail square large source={{ uri: item.image }} />
+                </Left>
+                <Body>
+                    <Text style={{fontSize: 18}}>{item.name}</Text>
+                    <Text note numberOfLines={1} style={{fontSize: 18}}> </Text>
+                    <Text note style={{fontSize: 18}} numberOfLines={1}>{item.price}</Text>
+                </Body>
+                <Right>
+                    <Button  style={{backgroundColor: this.props.restaurant.mainColor}} onPress={() => {this.props.removeItem(item.menuItemId); this.forceUpdate()}}>
+                        <Text style={{ color: this.props.restaurant.secondaryColor, fontSize: 24 }}>-</Text>
+                    </Button>
+                </Right>
+                <Right>
+                    <Text style={{fontSize: 18}}>{this.props.getCount(item.menuItemId)}</Text>
+                </Right>
+                <Right>
+                    <Button  style={{backgroundColor: this.props.restaurant.mainColor}} onPress={() => {this.props.addItem(item.menuItemId); this.forceUpdate()}}>
+                        <Text style={{ color: this.props.restaurant.secondaryColor, fontSize: 24 }}>+</Text>
+                    </Button>
+                </Right>
+            </ListItem>
+        )
+    }
+}
