@@ -23,7 +23,11 @@ export default class ScannerScreen extends React.Component {
     handleBarCodeScanned = ({ type, data }) => {
         if(type === BarCodeScanner.Constants.BarCodeType.qr)
         {
-
+            let split = data.split('-');
+            this.props.navigation.navigate('Menu', {
+                restaurantId: split[0],
+                tableId: split[1]
+            });
         }
     }
 

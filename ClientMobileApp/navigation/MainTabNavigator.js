@@ -23,11 +23,15 @@ HomeStack.navigationOptions = {
             }
         />
     ),
+    tabBarOnPress({ navigation, defaultHandler }) {
+        navigation.popToTop();
+        defaultHandler();
+    }
 };
 
 const ScannerStack = createStackNavigator({
-    Menu: MenuScreen,
-    Scanner: ScannerScreen
+    Scanner: ScannerScreen,
+    Menu: MenuScreen
 })
 
 ScannerStack.navigationOptions = {
@@ -47,4 +51,7 @@ ScannerStack.navigationOptions = {
 export default createBottomTabNavigator({
     HomeStack,
     ScannerStack
-});
+},
+    {
+        initialRouteName: 'HomeStack'
+    });

@@ -35,7 +35,7 @@ export default class MenuScreen extends React.Component {
         let tableId = navigation.getParam('tableId', 'NO-ID');
         let restaurantId = navigation.getParam('restaurantId', 'NO-ID');
 
-        fetch(api + 'restaurant/' + 1)
+        fetch(api + 'restaurant/' + restaurantId)
             .then(res => res.json())
             .then(data => this.setState({
                 restaurantId: restaurantId,
