@@ -13,5 +13,6 @@ namespace RestaurantPortal.Db.Entities
         public string SecondaryColor { get; set; }
 
         public ICollection<Order> Orders { get; set; }
+        public ICollection<Location> Locations { get; set; }
     }
 }

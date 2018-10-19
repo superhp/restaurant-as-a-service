@@ -14,6 +14,7 @@ namespace RestaurantPortal.Db
         public DbSet<Order> Orders { get; set; }
         public DbSet<OrderMenuItem> OrderMenuItems { get; set; }
         public DbSet<Restaurant> Restaurants { get; set; }
+        public DbSet<Location> Locations { get; set; }
 
         protected override void OnModelCreating(ModelBuilder modelBuilder)
         {
@@ -34,6 +35,12 @@ namespace RestaurantPortal.Db
             .Entity<Order>()
             .HasOne<Restaurant>(e => e.Restaurant)
             .WithMany(e => e.Orders)
+            .OnDelete(DeleteBehavior.Restrict);
+
+            modelBuilder
+            .Entity<Location>()
+            .HasOne<Restaurant>(e => e.Restaurant)
+            .WithMany(e => e.Locations)
             .OnDelete(DeleteBehavior.Restrict);
         }
     }
