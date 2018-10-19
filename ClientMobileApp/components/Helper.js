@@ -1,1 +1,0 @@
-export const api = "http://waiterless.azurewebsites.net/api/";
