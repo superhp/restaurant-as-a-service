@@ -31,21 +31,24 @@ export default class HomeScreen extends React.Component {
                 <View>
                     <Text style={styles.sectionTitle}>Restaurants</Text>
                     <TouchableOpacity style={styles.link}><Text style={styles.linkText}>See all</Text></TouchableOpacity>
-                </View>                
-                <Carousel containerStyle={{height: 250}}>
+                </View>
+                <Carousel containerStyle={{ height: 250 }}>
                     {
                         this.state.restaurants.map(restaurant => {
-                            return <RestaurantCard key={restaurant.id} restaurant={restaurant} navigation={this.props.navigation}/>
+                            return <RestaurantCard key={restaurant.id} restaurant={restaurant} navigation={this.props.navigation} />
                         })
                     }
-                </Carousel>    
-                <Text style={styles.sectionTitle}>Offers</Text>
+                </Carousel>
+                <View>
+                    <Text style={styles.sectionTitle}>Offers</Text>
+                    <TouchableOpacity style={styles.link}><Text style={styles.linkText}>See all</Text></TouchableOpacity>
+                </View>
                 {
-                    this.state.offers.length > 0 
-                    ? <FlatList data={this.state.offers}/>
-                    : <View style={styles.emptyOffers}>
-                        <Text>It is very empty in here</Text>
-                    </View>
+                    this.state.offers.length > 0
+                        ? <FlatList data={this.state.offers} />
+                        : <View style={styles.emptyOffers}>
+                            <Text>It is very empty in here</Text>
+                        </View>
                 }
             </View>
         );
