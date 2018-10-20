@@ -5,12 +5,12 @@ import {
     ActivityIndicator,
     SectionList    
 } from 'react-native';
-import MenuTitle from '../components/MenuTitle';
+import MenuTitle from '../components/menu/MenuTitle';
 import { api } from '../constants/Api';
-import MenuCategory from '../components/MenuCategory';
-import MenuItem from '../components/MenuItem';
-import MenuFooter from '../components/MenuFooter';
-import MenuModal from '../components/MenuModal';
+import MenuCategory from '../components/menu/MenuCategory';
+import MenuItem from '../components/menu/MenuItem';
+import MenuFooter from '../components/menu/MenuFooter';
+import MenuModal from '../components/menu/MenuModal';
 
 export default class MenuScreen extends React.Component {
     state = {
