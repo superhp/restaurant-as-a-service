@@ -6,24 +6,42 @@ import {
     View,
     Image,
     TouchableOpacity,
-    Text
+    Text,
+    Button,
+    AsyncStorage
 } from 'react-native';
 import { DrawerItems } from 'react-navigation';
 
-export default CustomDrawer = (props) => (
-    <SafeAreaView style={styles.container}>
-        <View style={styles.drawerHeader}>
-            <Image style={styles.userAvatar} source={{uri: 'https://png2.kisspng.com/20180613/jiz/kisspng-technical-support-computer-icons-user-avatar-5b209ed4b1bed1.1136246815288644687281.png'}}/>
-            <View style={styles.drawerHeaderText}>
-                <Text style={styles.userName}>Petras Petraitis</Text>
-                <TouchableOpacity><Text style={styles.profileLink}>View profile</Text></TouchableOpacity>
-            </View>
-        </View>
-        <ScrollView>
-            <DrawerItems {...props} />
-        </ScrollView>
-    </SafeAreaView>
-);
+export default class CustomDrawer extends React.Component {
+    constructor(props) {
+        super(props);
+    }
+
+    _signOutAsync = async () => {
+        await AsyncStorage.clear();
+        this.props.navigation.navigate('Auth');
+    };
+    
+    render() {
+        return (
+            <SafeAreaView style={styles.container}>
+                <View style={styles.drawerHeader}>
+                    <Image style={styles.userAvatar} source={{ uri: 'https://png2.kisspng.com/20180613/jiz/kisspng-technical-support-computer-icons-user-avatar-5b209ed4b1bed1.1136246815288644687281.png' }} />
+                    <View style={styles.drawerHeaderText}>
+                        <Text style={styles.userName}>Petras Petraitis</Text>
+                        <TouchableOpacity><Text style={styles.profileLink}>View profile</Text></TouchableOpacity>
+                    </View>
+                    
+                </View>
+                <ScrollView>
+                    <DrawerItems {...this.props} />
+                </ScrollView>
+                <Button title="Sign out" onPress={this._signOutAsync}></Button>
+            </SafeAreaView>
+        );
+    }
+
+};
 
 const styles = StyleSheet.create({
     container: {
@@ -48,7 +66,7 @@ const styles = StyleSheet.create({
         marginLeft: 10
     },
     userName: {
-        fontSize: 22,        
+        fontSize: 22,
     },
     profileLink: {
         fontSize: 20,
