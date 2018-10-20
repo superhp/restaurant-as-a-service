@@ -3,11 +3,14 @@ import {
     View,
     StyleSheet,
     Text,
-    FlatList
+    FlatList,
+    TouchableOpacity
 } from 'react-native';
 import RestaurantCard from '../components/home/RestaurantCard';
 import { api } from '../constants/Api';
-import { Carousel, TouchableOpacity } from 'react-native-ui-lib';
+import { Carousel } from 'react-native-ui-lib';
+import Icon from 'react-native-vector-icons/Ionicons';
+import { DrawerActions } from 'react-navigation';
 
 export default class HomeScreen extends React.Component {
     static navigationOptions = {
@@ -28,6 +31,11 @@ export default class HomeScreen extends React.Component {
     render() {
         return (
             <View style={styles.container}>
+                <View style={styles.header}>
+                    <TouchableOpacity onPress={() => this.props.navigation.dispatch(DrawerActions.openDrawer())}>
+                        <Icon name="ios-contact" color="black" size={35} />
+                    </TouchableOpacity>
+                </View>
                 <View>
                     <Text style={styles.sectionTitle}>Restaurants</Text>
                     <TouchableOpacity style={styles.link}><Text style={styles.linkText}>See all</Text></TouchableOpacity>

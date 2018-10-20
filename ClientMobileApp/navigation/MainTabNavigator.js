@@ -1,12 +1,13 @@
 import React from 'react';
 import { Platform } from 'react-native';
-import { createStackNavigator, createBottomTabNavigator } from 'react-navigation';
+import { createStackNavigator, createBottomTabNavigator, createDrawerNavigator } from 'react-navigation';
 
 import TabBarIcon from '../components/TabBarIcon';
 import HomeScreen from '../screens/HomeScreen';
 import ScannerScreen from '../screens/ScannerScreen';
 import MenuScreen from '../screens/MenuScreen';
 import LocationsScreen from '../screens/LocationsScreen';
+import CustomDrawer from '../components/drawer/CustomDrawer';
 
 const HomeStack = createStackNavigator({
     Home: HomeScreen,
@@ -51,10 +52,22 @@ ScannerStack.navigationOptions = {
     ),
 };
 
-export default createBottomTabNavigator({
+const tabNavigator =  createBottomTabNavigator({
     HomeStack,
     ScannerStack
 },
-    {
-        initialRouteName: 'HomeStack'
-    });
+{
+    initialRouteName: 'HomeStack'
+});
+
+
+export default createDrawerNavigator({
+    Home: { 
+        screen: tabNavigator,
+        navigationOptions:{
+            drawerLabel: () => null
+        }
+    },
+}, {
+    contentComponent: CustomDrawer
+})
