@@ -18,9 +18,11 @@ namespace RestaurantPortal.Db.Repositories
 
             var locationDtos = locations.Select(l => new LocationDto
             {
-                LocationId = l.LocationId,
+                Id = l.LocationId,
                 RestaurantId = l.RestaurantId,
-                Address = l.Address
+                Address = l.Address,
+                Latitude = l.Latitude,
+                Longitude = l.Longitude
             });
 
             return locationDtos;
