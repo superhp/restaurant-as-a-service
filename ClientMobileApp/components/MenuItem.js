@@ -15,6 +15,11 @@ export default class MenuItem extends React.Component {
     render() {
         return (
             <View style={styles.container}>
+                <View style={[styles.addedIndicator, {
+                    backgroundColor: this.props.item.quantity !== 0 ? this.props.mainColor : "#eaeaea",
+                    width: this.props.item.quantity !== 0 ? 7 : 4,
+                    marginRight: this.props.item.quantity !== 0 ? 10 : 13,
+                }]}></View>
                 <View style={styles.imageContainer}>
                     <Image style={styles.itemImage} source={{ uri: this.props.item.image }} />
                 </View>
@@ -23,16 +28,16 @@ export default class MenuItem extends React.Component {
                     <Text style={styles.itemPrice}>{this.props.item.price}</Text>
                 </View>
                 <View style={styles.buttonContainer}>
-                    <TouchableOpacity 
-                        onPress={() => { this.props.decreaseQuantity(this.props.item.menuItemId) }} 
+                    <TouchableOpacity
+                        onPress={() => { this.props.decreaseQuantity(this.props.item.menuItemId) }}
                         style={[styles.buttonStyle, { backgroundColor: this.props.mainColor }]}>
-                        <Text style={styles.buttonText}>-</Text>
+                        <Text style={[styles.buttonText, { color: this.props.secondaryColor }]}>-</Text>
                     </TouchableOpacity>
                     <Text style={styles.counterText}>{this.props.item.quantity}</Text>
-                    <TouchableOpacity 
-                        onPress={() => { this.props.increaseQuantity(this.props.item.menuItemId) }} 
+                    <TouchableOpacity
+                        onPress={() => { this.props.increaseQuantity(this.props.item.menuItemId) }}
                         style={[styles.buttonStyle, { backgroundColor: this.props.mainColor }]}>
-                        <Text style={styles.buttonText}>+</Text>
+                        <Text style={[styles.buttonText, { color: this.props.secondaryColor }]}>+</Text>
                     </TouchableOpacity>
                 </View>
             </View>
@@ -42,10 +47,14 @@ export default class MenuItem extends React.Component {
 
 const styles = StyleSheet.create({
     container: {
-        padding: 10,
+        paddingRight: 10,
+        paddingTop: 10,
+        paddingBottom: 10,
         height: 90,
         flexDirection: 'row',
         alignItems: 'center',
+        borderBottomColor: 'lightgrey',
+        borderBottomWidth: 0.5,
     },
     imageContainer: {
         height: 70,
@@ -54,7 +63,8 @@ const styles = StyleSheet.create({
     itemImage: {
         flex: 1,
         flexWrap: 'wrap',
-        flexDirection: 'row'
+        flexDirection: 'row',
+        borderRadius: 5
     },
     textContainer: {
         marginLeft: 10
@@ -87,5 +97,10 @@ const styles = StyleSheet.create({
     buttonText: {
         textAlign: 'center',
         fontSize: 22
+    },
+    addedIndicator: {
+        height: 80,
+        borderBottomRightRadius: 3,
+        borderTopRightRadius: 3,        
     }
 });

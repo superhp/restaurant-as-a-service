@@ -27,7 +27,7 @@ export default class MenuScreen extends React.Component {
     }
 
     static navigationOptions = {
-        title: 'Menu',
+        header: null
     };
 
     componentDidMount() {
@@ -108,6 +108,7 @@ export default class MenuScreen extends React.Component {
                 <SectionList
                     renderItem={({ item, index, section }) =>
                         <MenuItem key={index} mainColor={this.state.mainColor} item={item}
+                            secondaryColor={this.state.secondaryColor}
                             increaseQuantity={this.increaseQuantity}
                             decreaseQuantity={this.decreaseQuantity}>
                         </MenuItem>}
@@ -138,6 +139,7 @@ const styles = StyleSheet.create({
         flexDirection: 'column',
         justifyContent: 'flex-start',
         alignItems: 'stretch',
+        marginTop: 23
     },
     loadingBar: {
         flex: 1,
