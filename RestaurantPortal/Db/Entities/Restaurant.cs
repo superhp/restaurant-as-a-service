@@ -9,10 +9,12 @@ namespace RestaurantPortal.Db.Entities
         public int RestaurantId { get; set; }
         public string Name { get; set; }
         public string Logo { get; set; }
+        public string Cover { get; set; }
         public string MainColor { get; set; }
         public string SecondaryColor { get; set; }
 
         public ICollection<Order> Orders { get; set; }
         public ICollection<Location> Locations { get; set; }
+        public ICollection<RestaurantTag> RestaurantTags { get; set; }
     }
 }

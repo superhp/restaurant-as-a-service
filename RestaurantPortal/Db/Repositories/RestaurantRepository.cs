@@ -1,6 +1,8 @@
 ﻿using System;
 using System.Collections.Generic;
 using System.Linq;
+using Microsoft.EntityFrameworkCore;
+using RestaurantPortal.Db.Entities;
 using RestaurantPortal.Models;
 
 namespace RestaurantPortal.Db.Repositories
@@ -30,31 +32,31 @@ namespace RestaurantPortal.Db.Repositories
 
         public RestaurantDto Get(int id)
         {
-            var restaurant = _dbContext.Restaurants.Find(id);
+            var restaurant = _dbContext.Restaurants.Include(r => r.RestaurantTags).ThenInclude(t => t.Tag).Single(r => r.RestaurantId == id);
 
             if (restaurant == null)
                 throw new ArgumentException($"No restaurant found with ID {id}");
 
-            return new RestaurantDto
-            {
-                Id = restaurant.RestaurantId,
-                Logo = restaurant.Logo,
-                MainColor = restaurant.MainColor,
-                SecondaryColor = restaurant.SecondaryColor,
-                Name = restaurant.Name
-            };
+            return ToDto(restaurant);
         }
 
         public IEnumerable<RestaurantDto> GetAll()
         {
-            return _dbContext.Restaurants.Select(restaurant => new RestaurantDto
+            return _dbContext.Restaurants.Include(r => r.RestaurantTags).ThenInclude(t => t.Tag).Select(ToDto);
+        }
+
+        private RestaurantDto ToDto(Restaurant restaurant)
+        {
+            return new RestaurantDto
             {
                 Id = restaurant.RestaurantId,
                 Logo = restaurant.Logo,
+                Cover = restaurant.Cover,
                 MainColor = restaurant.MainColor,
                 SecondaryColor = restaurant.SecondaryColor,
-                Name = restaurant.Name
-            });
+                Name = restaurant.Name,
+                Tags = restaurant.RestaurantTags.Select(r => r.Tag.Name)
+            };
         }
     }
 }
