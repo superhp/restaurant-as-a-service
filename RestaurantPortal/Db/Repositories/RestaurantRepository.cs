@@ -51,6 +51,7 @@ namespace RestaurantPortal.Db.Repositories
             {
                 Id = restaurant.RestaurantId,
                 Logo = restaurant.Logo,
+                Cover = restaurant.Cover,
                 MainColor = restaurant.MainColor,
                 SecondaryColor = restaurant.SecondaryColor,
                 Name = restaurant.Name,
