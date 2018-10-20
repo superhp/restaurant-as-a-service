@@ -59,20 +59,20 @@ export default class LocationsScreen extends React.Component {
                     onAppPressed={() => this.setState({ isVisible: false })}
                     onBackButtonPressed={() => this.setState({ isVisible: false })}
                     options={{
-                        latitude: "38.8976763",
-                        longitude: "-77.0387185",
+                        latitude: this.state.selectedLocation.latitude,
+                        longitude: this.state.selectedLocation.longitude,
                         title: this.state.selectedLocation.address,
-                        dialogTitle: 'This is the dialog Title',
-                        dialogMessage: 'This is the amazing dialog Message',
-                        cancelText: 'This is the cancel button text'
+                        dialogTitle: 'Choose an app for navigation',
+                        
+                        cancelText: 'Back'
                     }}
                 />
                 <FlatList
                 data={this.state.locations}
                 keyExtractor={({item, index}) => item}
                 renderItem={({item}) => 
-                    <View key={item.locationId} style={styles.itemContainer}>
-                        <TouchableOpacity key={item.locationId} onPress={() => this.openMaps(item)}>
+                    <View key={item.id} style={styles.itemContainer}>
+                        <TouchableOpacity key={item.id} onPress={() => this.openMaps(item)}>
                             <View style={styles.textContainer}>
                                 <Text style={styles.itemName}>{item.address}</Text>
                             </View>

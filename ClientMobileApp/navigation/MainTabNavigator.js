@@ -6,6 +6,7 @@ import TabBarIcon from '../components/TabBarIcon';
 import HomeScreen from '../screens/HomeScreen';
 import ScannerScreen from '../screens/ScannerScreen';
 import MenuScreen from '../screens/MenuScreen';
+import LocationsScreen from '../screens/LocationsScreen';
 
 const HomeStack = createStackNavigator({
     Home: HomeScreen,
@@ -31,7 +32,8 @@ HomeStack.navigationOptions = {
 
 const ScannerStack = createStackNavigator({
     Scanner: ScannerScreen,
-    Menu: MenuScreen
+    Menu: MenuScreen,
+    Locations: LocationsScreen
 })
 
 ScannerStack.navigationOptions = {
