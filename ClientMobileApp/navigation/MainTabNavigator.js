@@ -10,6 +10,7 @@ import LocationsScreen from '../screens/LocationsScreen';
 
 const HomeStack = createStackNavigator({
     Home: HomeScreen,
+    Locations: LocationsScreen
 });
 
 HomeStack.navigationOptions = {
@@ -19,8 +20,8 @@ HomeStack.navigationOptions = {
             focused={focused}
             name={
                 Platform.OS === 'ios'
-                    ? `ios-information-circle${focused ? '' : '-outline'}`
-                    : 'md-information-circle'
+                    ? `ios-home${focused ? '' : '-outline'}`
+                    : 'md-home'
             }
         />
     ),

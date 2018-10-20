@@ -7,7 +7,7 @@ import {
 } from 'react-native';
 import RestaurantCard from '../components/home/RestaurantCard';
 import { api } from '../constants/Api';
-import { Carousel } from 'react-native-ui-lib';
+import { Carousel, TouchableOpacity } from 'react-native-ui-lib';
 
 export default class HomeScreen extends React.Component {
     static navigationOptions = {
@@ -15,7 +15,8 @@ export default class HomeScreen extends React.Component {
     };
 
     state = {
-        restaurants: []
+        restaurants: [],
+        offers: []
     }
 
     componentDidMount() {
@@ -27,14 +28,25 @@ export default class HomeScreen extends React.Component {
     render() {
         return (
             <View style={styles.container}>
-                <Text style={styles.sectionTitle}>Restaurants</Text>
+                <View>
+                    <Text style={styles.sectionTitle}>Restaurants</Text>
+                    <TouchableOpacity style={styles.link}><Text style={styles.linkText}>See all</Text></TouchableOpacity>
+                </View>                
                 <Carousel containerStyle={{height: 250}}>
                     {
                         this.state.restaurants.map(restaurant => {
-                            return <RestaurantCard key={restaurant.id} restaurant={restaurant} />
+                            return <RestaurantCard key={restaurant.id} restaurant={restaurant} navigation={this.props.navigation}/>
                         })
                     }
-                </Carousel>                
+                </Carousel>    
+                <Text style={styles.sectionTitle}>Offers</Text>
+                {
+                    this.state.offers.length > 0 
+                    ? <FlatList data={this.state.offers}/>
+                    : <View style={styles.emptyOffers}>
+                        <Text>It is very empty in here</Text>
+                    </View>
+                }
             </View>
         );
     };
@@ -50,7 +62,24 @@ const styles = StyleSheet.create({
         backgroundColor: '#fff',
     },
     sectionTitle: {
-        fontSize: 40,
+        fontSize: 30,
         fontWeight: 'bold'
+    },
+    emptyOffers: {
+        flex: 1,
+        height: 100,
+        backgroundColor: '#eaeaea',
+        justifyContent: 'center',
+        alignItems: 'center',
+        borderRadius: 10
+    },
+    link: {
+        alignItems: 'flex-end',
+        marginTop: -21,
+        marginRight: 5
+    },
+    linkText: {
+        color: '#4286f4',
+        fontSize: 16
     }
 });

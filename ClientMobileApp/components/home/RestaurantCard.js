@@ -4,7 +4,8 @@ import {
     View,
     Dimensions,
     Image,
-    Text
+    Text,
+    TouchableOpacity
 } from 'react-native';
 import RestaurantTag from './RestaurantTag';
 
@@ -19,7 +20,11 @@ export default class RestaurantCard extends React.Component {
         });
 
         return (
-            <View style={styles.card}>
+            <TouchableOpacity style={styles.card} activeOpacity={0.8} onPress={() => {
+                    this.props.navigation.navigate('Locations',{
+                        restaurantId: this.props.restaurant.id
+                    })
+                }}>
                 <Image style={styles.cardImage} source={{ uri: this.props.restaurant.cover }} />
                 <View style={styles.cardFooter}>
                     <Text style={styles.title}>{this.props.restaurant.name}</Text>
@@ -27,7 +32,7 @@ export default class RestaurantCard extends React.Component {
                         {tags}
                     </View>
                 </View>
-            </View>
+            </TouchableOpacity>
 
         );
     }
