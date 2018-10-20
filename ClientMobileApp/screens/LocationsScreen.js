@@ -4,11 +4,11 @@ import {
     StyleSheet,
     ActivityIndicator,
     TouchableOpacity,
-    FlatList,
     Text
 } from 'react-native';
 import { api } from '../constants/Api';
-import { Popup } from 'react-native-map-link';
+import LocationMap from '../components/location/LocationMap';
+import LocationsList from '../components/location/LocationsList';
 
 export default class LocationsScreen extends React.Component {
     static navigationOptions = {
@@ -19,7 +19,7 @@ export default class LocationsScreen extends React.Component {
         isLoading: true,
         restaurantId: 0,
         locations: [],
-        isVisible: false,
+        showMap: false,
         selectedLocation: { address: "" }
     }
 
@@ -36,10 +36,12 @@ export default class LocationsScreen extends React.Component {
             }));
     }
 
-    openMaps(item) {
-        console.log(item);
+    openMaps = (item) => {
+         this.setState({ showMap: true, selectedLocation: item });
+    }
 
-        this.setState({ isVisible: true, selectedLocation: item });
+    closeMapModal = () => {
+        this.setState({ showMap: false });
     }
 
     render() {
@@ -53,32 +55,8 @@ export default class LocationsScreen extends React.Component {
 
         return (
             <View>
-                <Popup
-                    isVisible={this.state.isVisible}
-                    onCancelPressed={() => this.setState({ isVisible: false })}
-                    onAppPressed={() => this.setState({ isVisible: false })}
-                    onBackButtonPressed={() => this.setState({ isVisible: false })}
-                    options={{
-                        latitude: this.state.selectedLocation.latitude,
-                        longitude: this.state.selectedLocation.longitude,
-                        title: this.state.selectedLocation.address,
-                        dialogTitle: 'Choose an app for navigation',
-                        
-                        cancelText: 'Back'
-                    }}
-                />
-                <FlatList
-                data={this.state.locations}
-                keyExtractor={({item, index}) => item}
-                renderItem={({item}) => 
-                    <View key={item.id} style={styles.itemContainer}>
-                        <TouchableOpacity key={item.id} onPress={() => this.openMaps(item)}>
-                            <View style={styles.textContainer}>
-                                <Text style={styles.itemName}>{item.address}</Text>
-                            </View>
-                        </TouchableOpacity>
-                    </View>
-                } />
+                <LocationMap selectedLocation={this.state.selectedLocation} showMap={ this.state.showMap } hideMap={ this.closeMapModal } />
+                <LocationsList locations={ this.state.locations } onLocationSelected={ this.openMaps }  />
             </View>
         );
     };
@@ -97,21 +75,5 @@ const styles = StyleSheet.create({
         justifyContent: 'center',
         alignItems: 'center',
     },
-    textContainer: {
-        marginLeft: 10
-    },
-    itemName: {
-        fontSize: 22,
-        fontWeight: 'bold'
-    },
-    itemContainer: {
-        paddingRight: 10,
-        paddingTop: 10,
-        paddingBottom: 10,
-        height: 90,
-        flexDirection: 'row',
-        alignItems: 'center',
-        borderBottomColor: 'lightgrey',
-        borderBottomWidth: 0.5,
-    },
+    
 });
