@@ -5,7 +5,7 @@ import {
     Text,
     FlatList
 } from 'react-native';
-import RestaurantCard from '../components/Home/RestaurantCard';
+import RestaurantCard from '../components/home/RestaurantCard';
 import { api } from '../constants/Api';
 import { Carousel } from 'react-native-ui-lib';
 

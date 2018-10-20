@@ -6,7 +6,7 @@ import {
     Image,
     Text
 } from 'react-native';
-import RestaurantTag from './RestautantTag';
+import RestaurantTag from './RestaurantTag';
 
 export default class RestaurantCard extends React.Component {
     constructor(props) {
