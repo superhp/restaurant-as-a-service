@@ -36,21 +36,22 @@ export default class HomeScreen extends React.Component {
                         <Icon name="ios-contact" color="black" size={35} />
                     </TouchableOpacity>
                 </View>
-                <View>
+                <View style={styles.header}>
                     <Text style={styles.sectionTitle}>Restaurants</Text>
                     <TouchableOpacity style={styles.link}><Text style={styles.linkText}>See all</Text></TouchableOpacity>
                 </View>
-                <Carousel containerStyle={{ height: 250 }}>
+                <Carousel containerStyle={{ height: 250, flex: 7, borderBottomColor: '#eaeaea', borderBottomWidth: 0.5 }}>
                     {
                         this.state.restaurants.map(restaurant => {
                             return <RestaurantCard key={restaurant.id} restaurant={restaurant} navigation={this.props.navigation} />
                         })
                     }
                 </Carousel>
-                <View>
+                <View style={styles.header}>
                     <Text style={styles.sectionTitle}>Offers</Text>
                     <TouchableOpacity style={styles.link}><Text style={styles.linkText}>See all</Text></TouchableOpacity>
                 </View>
+                <View style={{flex: 8}}>
                 {
                     this.state.offers.length > 0
                         ? <FlatList data={this.state.offers} />
@@ -58,6 +59,7 @@ export default class HomeScreen extends React.Component {
                             <Text>It is very empty in here</Text>
                         </View>
                 }
+                </View>
             </View>
         );
     };
@@ -82,7 +84,7 @@ const styles = StyleSheet.create({
         backgroundColor: '#eaeaea',
         justifyContent: 'center',
         alignItems: 'center',
-        borderRadius: 10
+        borderRadius: 3
     },
     link: {
         alignItems: 'flex-end',
@@ -92,5 +94,8 @@ const styles = StyleSheet.create({
     linkText: {
         color: '#4286f4',
         fontSize: 16
+    },
+    header: {
+        flex: 1
     }
 });

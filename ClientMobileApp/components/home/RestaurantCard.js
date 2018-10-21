@@ -53,13 +53,13 @@ const styles = StyleSheet.create({
 
         elevation: 5,
         margin: 5,
-        borderRadius: 10
+        borderRadius: 3
     },
     cardImage: {
         flex: 2,
         flexWrap: 'wrap',
         flexDirection: 'row',
-        borderRadius: 10,
+        borderRadius: 3,
     },
     cardFooter: {
         padding: 10,
@@ -69,8 +69,8 @@ const styles = StyleSheet.create({
         height: 70,
         marginTop: -70,
         opacity: 0.8,
-        borderBottomLeftRadius: 10,
-        borderBottomRightRadius: 10
+        borderBottomLeftRadius: 3,
+        borderBottomRightRadius: 3
     },
     title: {
         fontSize: 26
