@@ -1,14 +1,13 @@
 import React from 'react';
 import {
     View,
-    Button,
     AsyncStorage,
     StyleSheet,
     Text,
     CheckBox,
-    TouchableHighlight
+    TouchableOpacity
 } from 'react-native';
-import Icon from 'react-native-vector-icons/Ionicons';
+import CreateAccountButton from '../components/sign-up/CreateAccountButton';
 
 export default class SignUpScreen extends React.Component {
 
@@ -25,21 +24,31 @@ export default class SignUpScreen extends React.Component {
         this.props.navigation.navigate('App');
     };
 
+    navigateToCreateAccount = () => {
+        console.log('im here');
+        this.props.navigation.navigate('CreateAccount');
+    }
+
     render() {
         return (
             <View style={styles.container}>
-                <Text style={styles.title}>Sign Up</Text>
-                <View style={{ flexDirection: 'row'}}>
-                    <CheckBox value={this.state.gdprChecked}
-                        onValueChange={() => this.setState({gdprChecked: !this.state.gdprChecked})}/>
-                    <Text style={styles.checkBoxText}>I agree to the Terms of Services and Privacy Policy regarding the consent for the use of my personal data.</Text>
+                <View style={{ flex: 1, justifyContent: "center" }}>
+                    <Text style={styles.title}>Sign Up</Text>
                 </View>
-                <Icon.Button backgroundColor="#3b5998" name="logo-facebook" onPress={this._signInAsync}>
-                    <Text style={styles.fbLoginText}>Login with Facebook</Text>
-                </Icon.Button>
-               <Icon.Button name="mail" backgroundColor="#dddddd" onPress={this._signInAsync}>
-                    <Text style={styles.fbLoginText}>Sign in using email</Text>
-               </Icon.Button>
+                <View style={{ flex: 3, justifyContent: "center", alignItems: "stretch" }}>
+                    <View style={{ flexDirection: 'row' }}>
+                        <CheckBox value={this.state.gdprChecked}
+                            onValueChange={() => this.setState({ gdprChecked: !this.state.gdprChecked })} />
+                        <Text style={styles.checkBoxText}>I agree to the Terms of Services and Privacy Policy regarding the consent for the use of my personal data.</Text>
+                    </View>
+                    <CreateAccountButton navigateTo={this.navigateToCreateAccount} />
+                </View>
+                <View style={{flex: 1, flexDirection: "row", justifyContent: "center", alignItems: "flex-end" }}>
+                    <Text style={styles.secondaryText}>Already a user? </Text>
+                    <TouchableOpacity onPress={() => this.props.navigation.navigate('LogIn')}>
+                        <Text style={[styles.secondaryText, styles.link]}>Log In</Text>
+                    </TouchableOpacity>
+                </View>
             </View>
         );
     }
@@ -47,21 +56,19 @@ export default class SignUpScreen extends React.Component {
 
 const styles = StyleSheet.create({
     container: {
-        marginTop: 23,
-        padding: 10,
         flex: 1,
-        alignItems: 'center',
-        backgroundColor: '#fff',
+        backgroundColor: "#fff",
+        justifyContent: 'flex-end',
+        padding: 20,
+        marginTop: 23
     },
     title: {
         fontSize: 30,
-        fontWeight: 'bold',
+        padding: 10,
         textAlign: 'center',
-        marginTop: 50,
-        marginBottom: 30
+        justifyContent: 'center'
     },
-    checkBoxText: {flex: 1, flexWrap: 'wrap', marginLeft: 5, textAlign: 'justify'},
-    fbLoginText: {
-
-    }
+    checkBoxText: { flex: 1, flexWrap: 'wrap', marginLeft: 5, textAlign: 'justify' },
+    secondaryText: { fontSize: 22 },
+    link: { color: '#4286f4' }
 });

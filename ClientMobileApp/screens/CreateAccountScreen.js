@@ -76,8 +76,9 @@ const styles = StyleSheet.create({
     },
     title: {
         fontSize: 30,
+        padding: 10,
         textAlign: 'center',
-        marginBottom: 100
+        justifyContent: 'center'
     },
     input: {
         paddingLeft: 5,
