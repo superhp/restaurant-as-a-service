@@ -1,7 +1,7 @@
 import React from 'react';
 import { Platform } from 'react-native';
 import { createStackNavigator, createBottomTabNavigator, createDrawerNavigator } from 'react-navigation';
-
+import Icon from 'react-native-vector-icons/Ionicons';
 import TabBarIcon from '../components/TabBarIcon';
 import HomeScreen from '../screens/HomeScreen';
 import ScannerScreen from '../screens/ScannerScreen';
@@ -53,23 +53,35 @@ ScannerStack.navigationOptions = {
     ),
 };
 
-const tabNavigator =  createBottomTabNavigator({
+const tabNavigator = createBottomTabNavigator({
     HomeStack,
     ScannerStack
 },
-{
-    initialRouteName: 'HomeStack'
-});
+    {
+        initialRouteName: 'HomeStack'
+    });
+
+const PaymentMethodsStack = createStackNavigator({
+    PaymentMethodsList: PaymentMethodsScreen,
+})
 
 
 export default createDrawerNavigator({
-    Home: { 
+    Home: {
         screen: tabNavigator,
-        navigationOptions:{
+        navigationOptions: {
             drawerLabel: () => null
         }
     },
-    PaymentMethods: PaymentMethodsScreen
+    PaymentMethods: {
+        screen: PaymentMethodsStack,
+        navigationOptions: {
+            drawerLabel: 'Payment methods',
+            drawerIcon: ({ tintColor }) => (
+                <Icon name="ios-card" size={30} color={tintColor} />
+            )
+        }
+    }
 }, {
-    contentComponent: CustomDrawer
-})
+        contentComponent: CustomDrawer
+    })
