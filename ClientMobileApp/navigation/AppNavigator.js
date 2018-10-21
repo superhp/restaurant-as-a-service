@@ -2,7 +2,7 @@ import React from 'react';
 import { createSwitchNavigator, createStackNavigator } from 'react-navigation';
 import SignUpScreen from '../screens/SignUpScreen';
 import AuthLoadingScreen from '../screens/AuthLoadingScreen';
-import CreateAccountScreen from '../screens/CreateAccountScreen';
+import CreateAccountScreen from '../screens/CreateAccountScreen'
 
 import MainTabNavigator from './MainTabNavigator';
 
