@@ -31,27 +31,27 @@ export default class HomeScreen extends React.Component {
     render() {
         return (
             <View style={styles.container}>
-                <View style={styles.header}>
+                <View>
                     <TouchableOpacity onPress={() => this.props.navigation.dispatch(DrawerActions.openDrawer())}>
-                        <Icon name="ios-contact" color="black" size={35} />
+                        <Icon name="ios-contact" color="black" size={30} />
                     </TouchableOpacity>
                 </View>
-                <View style={styles.header}>
+                <View>
                     <Text style={styles.sectionTitle}>Restaurants</Text>
                     <TouchableOpacity style={styles.link}><Text style={styles.linkText}>See all</Text></TouchableOpacity>
                 </View>
-                <Carousel containerStyle={{ height: 250, flex: 7, borderBottomColor: '#eaeaea', borderBottomWidth: 0.5 }}>
+                <Carousel containerStyle={{ height: 250}}>
                     {
                         this.state.restaurants.map(restaurant => {
                             return <RestaurantCard key={restaurant.id} restaurant={restaurant} navigation={this.props.navigation} />
                         })
                     }
                 </Carousel>
-                <View style={styles.header}>
+                <View>
                     <Text style={styles.sectionTitle}>Offers</Text>
                     <TouchableOpacity style={styles.link}><Text style={styles.linkText}>See all</Text></TouchableOpacity>
                 </View>
-                <View style={{flex: 8}}>
+                <View style={{flex: 1}}>
                 {
                     this.state.offers.length > 0
                         ? <FlatList data={this.state.offers} />
@@ -75,7 +75,7 @@ const styles = StyleSheet.create({
         backgroundColor: '#fff',
     },
     sectionTitle: {
-        fontSize: 30,
+        fontSize: 28,
         fontWeight: 'bold'
     },
     emptyOffers: {
