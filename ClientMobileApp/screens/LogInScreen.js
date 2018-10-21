@@ -9,7 +9,7 @@ import {
 } from 'react-native';
 import Icon from 'react-native-vector-icons/Ionicons';
 
-export default class CreateAccountScreen extends React.Component {
+export default class LogInScreen extends React.Component {
     static navigationOptions = {
         header: null
     }
@@ -26,11 +26,10 @@ export default class CreateAccountScreen extends React.Component {
         return (
             <View style={styles.container}>
                 <View style={{ flex: 1, justifyContent: "center" }}>
-                    <Text style={styles.title}>Create account</Text>
+                    <Text style={styles.title}>Welcome back!</Text>
                 </View>
                 <View style={{ flex: 3, justifyContent: "center", alignItems: "stretch" }}>
                     <TextInput style={styles.input} placeholder="Email" keyboardType="email-address" />
-                    <TextInput style={styles.input} placeholder="Full name" />
                     <View style={{ flexDirection: "row", alignItems: "center", marginTop: 30 }}>
                         <TextInput style={[styles.input, { width: Dimensions.get('window').width - 40 }]} placeholder="Password" secureTextEntry={!this.state.passwordVisible}/>
                         <TouchableOpacity style={{ justifyContent: 'flex-end', marginLeft: -30 }} onPress={() => this.togglePasswordVisible()}>
@@ -41,24 +40,14 @@ export default class CreateAccountScreen extends React.Component {
                             }
                         </TouchableOpacity>
                     </View>
-                    <View style={{ flexDirection: "row", alignItems: "center"}}>
-                        <TextInput style={[styles.input, { width: Dimensions.get('window').width - 40 }]} placeholder="Repeat password" secureTextEntry={!this.state.passwordVisible}/>
-                        <TouchableOpacity style={{ justifyContent: 'flex-end', marginLeft: -30 }} onPress={() => this.togglePasswordVisible()}>
-                            {
-                                this.state.passwordVisible
-                                    ? <Icon name='ios-eye-off' color="darkgrey" size={30} />
-                                    : <Icon name='ios-eye' color="darkgrey" size={30} />
-                            }
-                        </TouchableOpacity>
-                    </View>
                     <TouchableOpacity style={styles.buttonContainer}>
-                        <Text style={styles.buttonText}>Create account</Text>
+                        <Text style={styles.buttonText}>Log in</Text>
                     </TouchableOpacity>
                 </View>
                 <View style={{ flexDirection: "row", justifyContent: "center", alignItems: "flex-end",  flex: 1 }}>
-                    <Text style={styles.secondaryText}>Already a user? </Text>
-                    <TouchableOpacity  onPress={() => this.props.navigation.navigate('LogIn')}>
-                        <Text style={[styles.secondaryText, styles.link]}>Log in</Text>
+                    <Text style={styles.secondaryText}>Dont have an account? </Text>
+                    <TouchableOpacity onPress={() => this.props.navigation.navigate('SignUp')}>
+                        <Text style={[styles.secondaryText, styles.link]}>Sign up</Text>
                     </TouchableOpacity>
                 </View>
             </View>
