@@ -7,18 +7,18 @@ import {
 } from 'react-native';
 import Icon from 'react-native-vector-icons/Ionicons';
 
-export default class CreateAccountButton extends React.Component {
+export default class SignUpButton extends React.Component {
     constructor(props) {
         super(props);
     }
 
     render() {
         return (
-            <TouchableHighlight style={styles.btnClickContain}
-                underlayColor="rgba(0,0,0,0)" onPress={this.props.navigateTo}>
-                <View style={styles.btnContainer}>
-                    <Icon color="#FFFFFF" size={30} name="ios-mail" />
-                    <Text style={styles.btnText}>Connect using email</Text>
+            <TouchableHighlight style={[styles.btnClickContain, { backgroundColor: this.props.color} ]}
+                underlayColor="rgba(0,0,0,0)" onPress={this.props.onClick}>
+                <View style={[styles.btnContainer, { backgroundColor: this.props.color} ]}>
+                    <Icon color="#FFFFFF" size={30} name={this.props.logo} />
+                    <Text style={styles.btnText}>{this.props.text}</Text>
                 </View>
             </TouchableHighlight>
         );
@@ -32,7 +32,6 @@ const styles = StyleSheet.create({
       justifyContent: 'center',
       alignItems: 'stretch',
       alignSelf: 'stretch',
-      backgroundColor: '#009D6E',
       borderRadius: 5,
       padding: 5,
       marginTop: 5,

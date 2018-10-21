@@ -7,7 +7,8 @@ import {
     CheckBox,
     TouchableOpacity
 } from 'react-native';
-import CreateAccountButton from '../components/sign-up/CreateAccountButton';
+import SignUpButton from '../components/sign-up/SignUpButton';
+import Expo from 'expo';
 
 export default class SignUpScreen extends React.Component {
 
@@ -25,8 +26,28 @@ export default class SignUpScreen extends React.Component {
     };
 
     navigateToCreateAccount = () => {
-        console.log('im here');
         this.props.navigation.navigate('CreateAccount');
+    }
+
+    _signInUsingGoogle = async () => {
+        try {
+            const result = await Expo.Google.logInAsync({
+                androidClientId: "hehehehehe",
+                scopes: ["profile", "email"]
+            })
+
+            if (result.type === "success") {
+                this.props.navigation.navigate('Home');
+                await AsyncStorage.setItem('userAccessToken', result.accessToken);
+                await AsyncStorage.setItem('userFullName', result.user.name);
+                await AsyncStorage.setItem('userImgUrl', result.user.photoUrl);
+                console.log(result.user);
+            } else {
+                console.log('user cancelled');
+            }
+        } catch(e) {
+            console.log(e);
+        }
     }
 
     render() {
@@ -41,9 +62,10 @@ export default class SignUpScreen extends React.Component {
                             onValueChange={() => this.setState({ gdprChecked: !this.state.gdprChecked })} />
                         <Text style={styles.checkBoxText}>I agree to the Terms of Services and Privacy Policy regarding the consent for the use of my personal data.</Text>
                     </View>
-                    <CreateAccountButton navigateTo={this.navigateToCreateAccount} />
+                    <SignUpButton onClick={this.navigateToCreateAccount} text="Connect using email" logo="ios-mail" color="#009D6E"/>
+                    <SignUpButton onClick={this._signInUsingGoogle} text="Connect using Google" logo="logo-google" color="#0366d6"/>
                 </View>
-                <View style={{flex: 1, flexDirection: "row", justifyContent: "center", alignItems: "flex-end" }}>
+                <View style={{ flex: 1, flexDirection: "row", justifyContent: "center", alignItems: "flex-end" }}>
                     <Text style={styles.secondaryText}>Already a user? </Text>
                     <TouchableOpacity onPress={() => this.props.navigation.navigate('LogIn')}>
                         <Text style={[styles.secondaryText, styles.link]}>Log In</Text>

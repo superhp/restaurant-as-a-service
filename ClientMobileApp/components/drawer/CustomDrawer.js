@@ -13,6 +13,12 @@ import {
 import { DrawerItems } from 'react-navigation';
 
 export default class CustomDrawer extends React.Component {
+
+    state = {
+        userFullName: null,
+        userImgUrl: null
+    }
+
     constructor(props) {
         super(props);
     }
@@ -21,14 +27,20 @@ export default class CustomDrawer extends React.Component {
         await AsyncStorage.clear();
         this.props.navigation.navigate('Auth');
     };
+
+    async componentDidMount() {
+        const userFullName = await AsyncStorage.getItem('userFullName');
+        const userImgUrl = await AsyncStorage.getItem('userImgUrl');
+        this.setState({userFullName: userFullName, userImgUrl: userImgUrl});
+    }
     
     render() {
         return (
             <SafeAreaView style={styles.container}>
                 <View style={styles.drawerHeader}>
-                    <Image style={styles.userAvatar} source={{ uri: 'https://png2.kisspng.com/20180613/jiz/kisspng-technical-support-computer-icons-user-avatar-5b209ed4b1bed1.1136246815288644687281.png' }} />
+                    <Image style={styles.userAvatar} source={{ uri: this.state.userImgUrl }} />
                     <View style={styles.drawerHeaderText}>
-                        <Text style={styles.userName}>Petras Petraitis</Text>
+                        <Text style={styles.userName}>{this.state.userFullName}</Text>
                         <TouchableOpacity><Text style={styles.profileLink}>View profile</Text></TouchableOpacity>
                     </View>
                     
