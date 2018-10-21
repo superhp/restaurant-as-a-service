@@ -29,8 +29,8 @@ export default class PaymentMethodsScreen extends React.Component {
                 <View style={styles.content}>
                     {/* <Text>TEST</Text> */}
                     <FlatList data={[
-                        { id: 1, type: "MC", shortNumber: "4200", default: true },
-                        { id: 2, type: "MC", shortNumber: "4200", default: false }]}
+                        { id: 1, type: "mastercard", shortNumber: "4200", default: true },
+                        { id: 2, type: "visa", shortNumber: "4200", default: false }]}
                         renderItem={({ item }) =>
                             <PaymentMethod item={item}/>                                                    
                         }

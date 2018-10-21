@@ -13,7 +13,7 @@ export default PaymentMethod = (props) => {
     return (
         <TouchableOpacity style={styles.container}>
             <View style={{flex: 1, flexDirection: "row", alignItems: "center"}}>
-                <Icon name="cc-mastercard" size={30}/>
+                <Icon name={`cc-${item.type}`} size={30}/>
                 <Text style={styles.text}>**** {item.shortNumber}</Text>
             </View>
             <View style={{flex: 1, flexDirection: "row", justifyContent: "flex-end"}}>
