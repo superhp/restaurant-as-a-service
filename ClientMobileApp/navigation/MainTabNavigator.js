@@ -8,6 +8,7 @@ import ScannerScreen from '../screens/ScannerScreen';
 import MenuScreen from '../screens/MenuScreen';
 import LocationsScreen from '../screens/LocationsScreen';
 import CustomDrawer from '../components/drawer/CustomDrawer';
+import PaymentMethodsScreen from '../screens/PaymentMethodsScreen';
 
 const HomeStack = createStackNavigator({
     Home: HomeScreen,
@@ -68,6 +69,7 @@ export default createDrawerNavigator({
             drawerLabel: () => null
         }
     },
+    PaymentMethods: PaymentMethodsScreen
 }, {
     contentComponent: CustomDrawer
 })

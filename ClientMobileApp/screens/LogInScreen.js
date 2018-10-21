@@ -5,7 +5,8 @@ import {
     View,
     TouchableOpacity,
     TextInput,
-    Dimensions
+    Dimensions,
+    AsyncStorage
 } from 'react-native';
 import Icon from 'react-native-vector-icons/Ionicons';
 
@@ -21,6 +22,11 @@ export default class LogInScreen extends React.Component {
     togglePasswordVisible = () => {
         this.setState({ passwordVisible: !this.state.passwordVisible })
     }
+
+    _signInAsync = async () => {
+        await AsyncStorage.setItem('userToken', 'abc');
+        this.props.navigation.navigate('App');
+    };
 
     render() {
         return (
@@ -40,7 +46,7 @@ export default class LogInScreen extends React.Component {
                             }
                         </TouchableOpacity>
                     </View>
-                    <TouchableOpacity style={styles.buttonContainer}>
+                    <TouchableOpacity style={styles.buttonContainer} onPress={() => this._signInAsync()}>
                         <Text style={styles.buttonText}>Log in</Text>
                     </TouchableOpacity>
                 </View>
