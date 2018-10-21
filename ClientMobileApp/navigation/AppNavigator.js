@@ -2,12 +2,13 @@ import React from 'react';
 import { createSwitchNavigator, createStackNavigator } from 'react-navigation';
 import SignUpScreen from '../screens/SignUpScreen';
 import AuthLoadingScreen from '../screens/AuthLoadingScreen';
-
+import CreateAccountScreen from '../screens/CreateAccountScreen';
 
 import MainTabNavigator from './MainTabNavigator';
 
 const AuthStack = createStackNavigator({
-  SignUp: SignUpScreen
+  SignUp: SignUpScreen,
+  CreateAccount: CreateAccountScreen
 })
 
 export default createSwitchNavigator({
